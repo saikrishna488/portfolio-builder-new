@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import Render from '../../components/Render';
 
 const page = () => {
-
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [skills, setSkills] = useState("");
@@ -15,7 +14,7 @@ const page = () => {
     const [college, setCollege] = useState("");
     const [field, setField] = useState("");
     const [role, setRole] = useState("");
-    const { user, data, setData , refresh, setRefresh} = useContext(globalContext);
+    const { user, data, setData, refresh, setRefresh } = useContext(globalContext);
 
     const router = useRouter();
 
@@ -30,7 +29,7 @@ const page = () => {
             setField(data.field);
             setRole(data.role);
         }
-    },[])
+    }, [data]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -52,7 +51,7 @@ const page = () => {
                 if (!user.username) {
                     throw new Error("not logged in");
                 }
-                fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/userdata', {
+                fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/userdata', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -61,51 +60,49 @@ const page = () => {
                 }).then((res) => {
                     return res.json();
                 }).then((data) => {
-                    if (data.successful == true) {
+                    if (data.successful === true) {
                         setData(data);
                         toast("Data updated now you can create portfolio/resume");
                         setRefresh(true);
                         router.push('/');
-                    }
-                    else {
+                    } else {
                         toast("Please login to continue");
                         throw new Error("err");
                     }
                 })
-            }
-            catch (err) {
+            } catch (err) {
                 toast("Please login to continue");
             }
-        }
-        else {
+        } else {
             toast("Please fill all the fields");
         }
     }
 
-    return (
-        <div className='userdata'>
-            {refresh ? <Render/> : null}
-            <form className='userdata-form' onSubmit={submit}>
-                <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} id="" placeholder='name (eg:harry)' required={true} />
-
-                <input type="text" name="field" value={field} onChange={e => setField(e.target.value)} id="" placeholder='Field (eg:computer science)' required={true} />
-
-                <input type="text" name="role" value={role} onChange={e => setRole(e.target.value)} id="" placeholder='Role (eg:Designing)' required={true} />
-
-                <input type="text" name="description" value={description}  onChange={e => setDescription(e.target.value)} id="" placeholder='description' required={true} />
-
-                <input type="text" name="skills" value={skills}  onChange={e => setSkills(e.target.value)} id="" placeholder='Skills - eg:(1,2,3)' required={true} />
-
-                <input type="text" name="certifications" value={certifications}  onChange={e => setCertifications(e.target.value)} id="" placeholder='Certifications - eg:(1,2,3)' required={true} />
-
-                <input type="text" name="projects" value={projects} onChange={e => setProjects(e.target.value)} id="" placeholder='Projects - eg:(1,2,3)' required={true} />
-
-                <input type="text" name="college" value={college} onChange={e => setCollege(e.target.value)} id="" placeholder='college' required={true} />
-
-                <button className='button'>Submit</button>
-            </form>
-        </div>
-    )
+    if (user.username) {
+        return (
+            <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6'>
+                {refresh ? <Render /> : null}
+                <form className='bg-white p-8 rounded-lg shadow-md w-full max-w-md' onSubmit={submit}>
+                    <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">Update Profile</h2>
+                    <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} placeholder='Name (e.g., Harry)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="field" value={field} onChange={e => setField(e.target.value)} placeholder='Field (e.g., Computer Science)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="role" value={role} onChange={e => setRole(e.target.value)} placeholder='Role (e.g., Designing)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="description" value={description} onChange={e => setDescription(e.target.value)} placeholder='Description' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="skills" value={skills} onChange={e => setSkills(e.target.value)} placeholder='Skills (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="certifications" value={certifications} onChange={e => setCertifications(e.target.value)} placeholder='Certifications (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="projects" value={projects} onChange={e => setProjects(e.target.value)} placeholder='Projects (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <input type="text" name="college" value={college} onChange={e => setCollege(e.target.value)} placeholder='College' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    <button className='bg-blue-500 text-white p-3 rounded-lg w-full hover:bg-blue-600 transition duration-300'>Submit</button>
+                </form>
+            </div>
+        )
+    } else {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
+                <h4 className="text-xl font-semibold text-gray-700">Login to access</h4>
+            </div>
+        )
+    }
 }
 
 export default page;

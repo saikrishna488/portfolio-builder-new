@@ -500,9 +500,6 @@ body {
 }
 
 @media (max-width: 459px) {
-  .title {
-    margin-top: 50px !important;
-  }
 }
 
 .title {

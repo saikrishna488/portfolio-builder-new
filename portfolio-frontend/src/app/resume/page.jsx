@@ -1,26 +1,43 @@
-"use client"
-import Resume1 from '../../components/templates/Resume1'
-import Resume2 from '../../components/templates/Resume2'
-import { globalContext } from '../../contextApi/GlobalContext';
+"use client";
+
+
+import dynamic from 'next/dynamic';
 import { useContext } from 'react';
+import { globalContext } from '../../contextApi/GlobalContext';
+
+const Resume1 = dynamic(() => import('../../components/templates/Resume1'), { ssr: false });
+const Resume2 = dynamic(() => import('../../components/templates/Resume2'), { ssr: false });
+import { toast } from 'react-toastify';
 
 const page = ()=>{
-    const {currentResume} = useContext(globalContext)
+    const {currentResume, user} = useContext(globalContext)
 
-    return (
-        <>
-        {
-            currentResume == 'resume1' ? (
-                <Resume1/>
-            ) : currentResume == 'resume2' ? (
-                <Resume2/>
-            ) : (
-                null
-            )
-        }
-        
-        </>
-    )
+    if (user.username){
+        return (
+            <>
+            {
+                currentResume == 'resume1' ? (
+                    <Resume1/>
+                ) : currentResume == 'resume2' ? (
+                    <Resume2/>
+                ) : (
+                    null
+                )
+            }
+            
+            </>
+        )
+    }
+    else{
+
+        toast("Login to access")
+        return (
+            <>
+            </>
+        )
+    }
+
+    
 
 }
 

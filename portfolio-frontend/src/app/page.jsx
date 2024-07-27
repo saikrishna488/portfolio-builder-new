@@ -6,10 +6,7 @@ import Score from '../components/Score';
 import Vertex from '../components/VertexAI';
 import Copyright from '../components/Copyright';
 import Render from '../components/Render';
-import Tutorials from '../components/Tutorials';
 import Contributor from '../components/Contributor';
-import Achievements from '../components/Achievements';
-import BlogRedirect from '../components/BlogRedirect';
 import Opportunities from '../components/Opportunities';
 import MockInterview from '../components/MockInterview';
 
@@ -25,7 +22,6 @@ export default function Home() {
       <Resume />
       <Score />
       <MockInterview/>
-      <Tutorials />
       <Contributor/>
       {/* <Achievements/>
       <BlogRedirect/> */}

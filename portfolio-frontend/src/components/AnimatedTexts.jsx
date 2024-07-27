@@ -13,14 +13,17 @@ const AnimatedText = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prevIndex) => (prevIndex + 1) % texts.length);
-    }, 3000); 
+    }, 3000);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, [texts.length]);
 
   return (
-    <div className="h-20 flex items-center justify-center">
-      <h1 className="text-3xl font-bold text-center animate-fadeIn">
+    <div className="h-20 flex items-center justify-center w-full px-4">
+      <h1
+        key={currentTextIndex}
+        className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white text-center whitespace-nowrap overflow-hidden border-r-2 border-black animate-textReveal"
+      >
         {texts[currentTextIndex]}
       </h1>
     </div>

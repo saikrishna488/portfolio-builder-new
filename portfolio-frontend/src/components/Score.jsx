@@ -31,7 +31,7 @@ const Score = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue p-6 sm:p-8 lg:p-12">
+    <div id='score' className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue p-6 sm:p-8 lg:p-12">
       <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 lg:p-12 max-w-md w-full">
         <h4 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           Upload your resume to check score

@@ -10,6 +10,7 @@ const GlobalContext = ({children}) => {
     const [refresh,setRefresh] = useState(false);
     const [questions, setQuestions] = useState([]);
     const [currentResume,setCurrentResume] = useState("");
+    const [adminKey,setAdminKey] = useState("");
 
     // const setUserdata = (data)=>{
     //     setUser(data);
@@ -29,7 +30,9 @@ const GlobalContext = ({children}) => {
             questions,
             setQuestions,
             currentResume,
-            setCurrentResume
+            setCurrentResume,
+            adminKey,
+            setAdminKey
         }}
         >
             {children}

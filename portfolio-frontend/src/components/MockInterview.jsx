@@ -49,7 +49,7 @@ const MockInterview = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue p-4">
+        <div id="mock" className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue p-4">
             <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
                 <h4 className="text-2xl font-semibold text-gray-800 mb-4">Mock Interview</h4>
                 <div className="flex flex-col space-y-4">

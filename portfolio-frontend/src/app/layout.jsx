@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import GlobalContext from '../contextApi/GlobalContext';
 import Header from '../components/Header';
+import Navbar from '../components/Navbar';
 import Toastify from '../components/Toastify';
 import Title from '../components/Title'
 import './local.css'
@@ -27,7 +28,8 @@ export default function RootLayout({ children }) {
         <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <GlobalContext>
           <Toastify/>
-          <Header/>
+          <Navbar/>
+          {/* <Header/> */}
           <Title/>
           {children}
         </GlobalContext>

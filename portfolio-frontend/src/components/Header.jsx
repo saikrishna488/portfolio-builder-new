@@ -113,7 +113,7 @@ const Header = () => {
                             </>
                         ) : (<></>)
                     }
-                    <li className='' id='port' onClick={openHam} ><AiOutlineClose size={20} />Close Menu</li>
+                    <li className='' id='port' onClick={openHam} ><AiOutlineClose size={20} /> Close Menu</li>
                 </ul>
                 <AiOutlineMenu onClick={openHam} style={{ cursor: "pointer" }} color='white' size={35} />
             </aside>

@@ -9,7 +9,8 @@ const Template = require('../models/templates');
 const portfolio = require('../templates/portfolio');
 const ResumeModel = require('../models/ResumeModel')
 const QuestionModel = require('../models/Questions')
-const ResultModel = require('../models/Result')
+const ResultModel = require('../models/Result');
+const AdminModel = require('../models/Admin')
 
 router.post('/add', async (req, res) => {
     const keywords = [
@@ -73,46 +74,48 @@ router.post('/register', async (req, res) => {
     if (req.body.name) {
         let { username, name, email, password } = { ...req.body };
         try {
-            let user = await User.findOne({ username });
-            console.log(user);
+            // Check if username or email already exists
+            let user = await User.findOne({ $or: [{ username }, { email }] });
+            
             if (!user) {
-                let user = await User.create({
+                // Create a new user
+                let newUser = new User({
                     username,
                     name,
                     email,
                     password
                 });
 
-                user.save();
+                await newUser.save();
                 console.log(name + " user logged in")
                 res.json({
                     login: true,
                     username,
                     name,
                     email
-                })
-            }
-            else {
+                });
+            } else {
+                // Username or email already exists
                 res.json({
-                    login: false
+                    login: false,
+                    message: 'Username or email already exists'
                 });
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
             res.json({
-                login: false
+                login: false,
+                message: 'An error occurred'
             });
         }
-
-
-    }
-    else {
+    } else {
         res.json({
-            login: false
+            login: false,
+            message: 'Name is required'
         });
     }
 });
+
 
 router.post('/login', async (req, res) => {
     if (req.body.username) {
@@ -386,7 +389,7 @@ router.post('/result',async (req,res)=>{
         }
 
         for (let entry of result) {
-            const existingEntry = await ResultModel.findOne({ username: entry.username, question: entry.question });
+            const existingEntry = await ResultModel.findOne({ email: entry.email, question: entry.question });
             if (existingEntry) {
                 
             }
@@ -431,6 +434,145 @@ router.post("/resume", async(req,res)=>{
         })
     }
 })
+
+//add admins
+router.post('/admin', async (req,res)=>{
+    try{
+        const {name, key} = req.body
+
+        if(name && key){
+            let newEntry = await AdminModel.create({
+                name,key
+            })
+
+            res.json({
+                message :true
+            })
+        }
+    }
+    catch(err){
+        console.log(err)
+        
+        res.json({
+            message :false
+        })
+    }
+})
+
+//get admins
+router.get('/admin', async (req,res)=>{
+    try{
+        const {key} = req.query
+
+        if(key){
+            const newEntry = await AdminModel.findOne({ key });
+
+            if(newEntry){
+                res.json({
+                message :true
+            })
+            }
+            else{
+                res.json({
+                    message :false
+                })
+            }
+
+            
+        }
+    }
+    catch(err){
+        console.log(err)
+        
+        res.json({
+            message :false
+        })
+    }
+})
+
+// get users
+router.get('/users', async (req, res) => {
+    try {
+        const { key } = req.query;
+
+        if (key) {
+            const check = await AdminModel.findOne({ key });
+
+            if (check) {
+                const users = await User.find({}).select('-password -name -username');
+
+                const emails = users.map((user) => user.email);
+
+                res.json({
+                    message: true,
+                    users: emails
+                });
+            } else {
+                res.json({
+                    message: false
+                });
+            }
+        } else {
+            res.json({
+                message: false,
+                error: 'Key is required'
+            });
+        }
+    } catch (err) {
+        console.log(err);
+
+        res.json({
+            message: false,
+            error: 'An error occurred'
+        });
+    }
+});
+
+
+//get responses
+router.get('/result', async (req, res) => {
+    try {
+        const { email, key } = req.query;
+        console.log(email)
+
+        if (!email || !key) {
+            return res.json({
+                message: false,
+                error: 'Email and key are required'
+            });
+        }
+
+        const check = await AdminModel.findOne({ key });
+
+        if (check) {
+            const responses = await ResultModel.find({email});
+
+            if (responses.length > 0) {
+                return res.json({
+                    message: true,
+                    responses: responses
+                });
+            } else {
+                return res.json({
+                    message: true,
+                    responses: [],
+                    info: 'No responses found for this email'
+                });
+            }
+        } else {
+            return res.json({
+                message: false,
+                error: 'Invalid key'
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            message: false,
+            error: 'An error occurred'
+        });
+    }
+});
 
 
 module.exports = router;

@@ -40,7 +40,7 @@ const page = () => {
               router.push('/');
             }
             else{
-              toast("username already exists");
+              toast("username or email already exists");
             }
           }
           catch (err) {
