@@ -1,17 +1,16 @@
 "use client";
 import { useContext, useState } from 'react';
 import { globalContext } from '../../contextApi/GlobalContext';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
-const page = () => {
+const Page = () => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(globalContext);
   const router = useRouter();
-
 
   const submit = async (e) => {
     e.preventDefault();
@@ -27,7 +26,7 @@ const page = () => {
           };
 
           try {
-            let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL+'/register', {
+            let res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/register', {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -35,46 +34,89 @@ const page = () => {
               body: JSON.stringify(obj)
             });
             let data = await res.json();
-            if (data.login == true) {
-              toast("Please login to continue");
+            if (data.login === true) {
+              toast.success("Registration successful! Please login to continue.");
               router.push('/');
+            } else {
+              toast.error("Username or email already exists.");
             }
-            else{
-              toast("username or email already exists");
-            }
+          } catch (err) {
+            toast.error("Registration failed. Please try again.");
           }
-          catch (err) {
-            toast("failed !!!!");
-          }
+        } else {
+          toast.error("Password should be at least 6 characters long.");
         }
-        else {
-          toast("password should be atleast of 5 chars length");
-        }
+      } else {
+        toast.error("Name should be at least 6 characters long.");
       }
-      else {
-        toast("name should be atleast of 5 chars length");
-      }
-    }
-    else {
-      toast("username should be atleast of 5 chars length");
+    } else {
+      toast.error("Username should be at least 6 characters long.");
     }
   }
 
   return (
-    <>
-      <div className='register'>
-        <form onSubmit={submit} className='form-register'>
-          <h4>Register</h4>
-          <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)} placeholder='username' id="" />
-          <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} placeholder='name' />
-          <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} placeholder='email' id="" />
-          <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} placeholder='password' id="" />
-          <input type="submit" className='login-button' value="Register" />
+    <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+      <div className='bg-white p-8 rounded-lg shadow-lg w-full max-w-md'>
+        <h2 className='text-2xl font-bold mb-6 text-gray-800 text-center'>Register</h2>
+        <form onSubmit={submit}>
+          <div className='mb-4'>
+            <label htmlFor="username" className='block text-gray-700 text-sm font-semibold mb-2'>Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              placeholder='Enter your username'
+              className='w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+          <div className='mb-4'>
+            <label htmlFor="name" className='block text-gray-700 text-sm font-semibold mb-2'>Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder='Enter your name'
+              className='w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+          <div className='mb-4'>
+            <label htmlFor="email" className='block text-gray-700 text-sm font-semibold mb-2'>Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder='Enter your email'
+              className='w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+          <div className='mb-6'>
+            <label htmlFor="password" className='block text-gray-700 text-sm font-semibold mb-2'>Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder='Enter your password'
+              className='w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+          <button
+            type="submit"
+            className='w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200'
+          >
+            Register
+          </button>
         </form>
       </div>
-    </>
-
+    </div>
   )
 }
 
-export default page;
+export default Page;
