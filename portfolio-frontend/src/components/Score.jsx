@@ -23,15 +23,26 @@ const Score = () => {
   };
 
   const getScoreMessage = () => {
-    if (score === 0) return null;
-    if (score === 40) return '(average)';
-    if (score > 40 && score <= 50) return '(Good)';
-    if (score > 50) return '(Excellent)';
-    return null;
+
+    if(score <= 65){
+      return 'average'
+    }
+    else if(score <=70){
+      return "Good"
+    }
+    else if(score<=75){
+      return "Great"
+    }
+    else if(score <= 100){
+      return "excellent"
+    }
+    else{
+      return null
+    }
   };
 
   return (
-    <div id='score' className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue p-6 sm:p-8 lg:p-12">
+    <div id='score' className="flex flex-col items-center justify-center min-h-screen p-6 sm:p-8 lg:p-12">
       <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 lg:p-12 max-w-md w-full">
         <h4 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
           Upload your resume to check score

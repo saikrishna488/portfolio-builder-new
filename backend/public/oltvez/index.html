@@ -1,172 +1,233 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>saikrishna</title>
+    <title>saikrishna's Portfolio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css"> <!-- Create a separate CSS file for your custom styles -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Add animate.css for animations -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
-        /* Add background image and custom styles here */
         body {
-            background-image: url('https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2022/04/web-developer-portfolio.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #fff;
+            background: linear-gradient(135deg, #1f1c2c, #928DAB);
+            color: #fff !important;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Dark background color for the header */
-        .header {
-            background-color: #333;
-        }
-
-        /* Background color for the navbar */
         .navbar {
-            background-color: #2C3E50;
-            /* Beautiful background color for the navbar */
+            background-color: #1c2331;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            list-style: none;
         }
 
-        .navbar-dark .navbar-toggler-icon {
-            background-color: #fff;
+        .navbar-brand {
+            color: #ffffff !important;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
-        /* Add more custom styles as needed */
-        /* Box shadow and custom styles for sections */
-        .content-section {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+        .navbar-brand:hover {
+            color: #a9a9a9 !important;
         }
 
-        /* Custom style to make each section take up half of the page */
-        .half-page {
-            min-height: 50vh;
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Footer styles */
-        .footer {
-            background-color: #333;
+        .navbar-nav .nav-item {
+            margin: 0 10px;
+            color : white;
+        }
+
+        .navbar-nav .nav-link {
+            color: white!important;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+        }
+        .nav-li{
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #a9a9a9 !important;
+        }
+
+        .navbar-toggler {
+            border-color: #ffffff;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><path stroke="%23ffffff" stroke-linecap="round" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/></svg>');
+        }
+
+        .header {
+            background: url('https://source.unsplash.com/1600x900/?technology,code') no-repeat center center/cover;
             color: #fff;
+            padding: 60px 15px;
             text-align: center;
-            padding: 10px 0;
+            background-size: cover;
         }
 
-        /* Beautiful project card styles */
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            margin-top: 10px;
+        }
+
+        .section {
+            padding: 60px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
         .project-card {
-            background-color: #3498db;
+            background: #2d3436;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #fff;
         }
 
-        /* Add a demo text style */
-        .demo-text {
-            color: #333;
+        .project-card h4 {
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            background-color: #1c2331;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        @media (max-width: 767px) {
+            .navbar-nav {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar-nav .nav-item {
+                margin: 5px 0;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 40px 15px;
+            }
+
+            .project-card h4 {
+                font-size: 1.25rem;
+            }
         }
     </style>
-    <title>Your Portfolio</title>
 </head>
 
 <body>
-    <!-- Navigation Bar with buttons for each section -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">saikrishna</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="bi bi-list"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar">
                 <li class="nav-item">
-                    <a class="nav-link" href="#about">About</a>
+                    <a class="nav-li" href="#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#skills">Skills</a>
+                    <a class="nav-li" href="#skills">Skills</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#certifications">Certifications</a>
+                    <a class="nav-li" href="#certifications">Certifications</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#projects">Projects</a>
+                    <a class="nav-li" href="#projects">Projects</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Header Section with dark background -->
-    <header class="jumbotron jumbotron-fluid text-center header half-page">
-        <div class="container">
-            <h1 class="display-4 animate__animated animate__fadeIn animate__delay-1s">saikrishna</h1>
-            <p class="lead animate__animated animate__fadeIn animate__delay-2s">computer science ,vdsdsvd | full stack</p>
+    <header class="header">
+        <div>
+            <h1 class="animate__animated animate__fadeIn">saikrishna</h1>
+            <p class="animate__animated animate__fadeIn animate__delay-1s">computer science | full stack</p>
         </div>
     </header>
 
-    <!-- Description Section with demo text -->
-    <section id="about" class="container my-5 py-5 content-section half-page">
-        <div class="project-card animate__animated animate__fadeIn animate__delay-2s">
-            <h2 class="card-title">About Me</h2>
-            <p class="card-text demo-text">
-                iam an graduate student
-            </p>
-        </div>
-    </section>
-
-    <!-- Skills Section with demo text -->
-    <section id="skills" class="container my-5 py-5 content-section half-page">
-        <div class="project-card animate__animated animate__fadeIn animate__delay-2s">
-            <h2 class="card-title">Skills</h2>
-            <li>c </li><li> c++ </li><li> java . js</li>
-        </div>
-    </section>
-
-    <!-- Certifications Section with demo text -->
-    <section id="certifications" class="container my-5 py-5 content-section half-page">
-        <div class="project-card animate__animated animate__fadeIn animate__delay-2s">
-            <h2 class="card-title">Certifications</h2>
-            <ul class="list demo-text">
-                
-                <li>Aws </li>
-                
-                <li> react </li>
-                
-                <li> node</li>
-                
-            </ul>
-        </div>
-    </section>
-
-    <!-- Projects Section with demo projects -->
-    <section id="projects" class="container my-5 py-5 content-section half-page">
-        <div class="project-card animate__animated animate__fadeIn animate__delay-2s">
-            <h2 class="card-title">Projects</h2>
-            
-            <div class="demo-text">
-                <h4>Project 1 face detection</h4>
+    <main>
+        <section id="about" class="section">
+            <div class="container">
+                <div class="project-card animate__animated animate__fadeIn">
+                    <h2>About Me</h2>
+                    <p>iam an graduate student</p>
+                </div>
             </div>
-            
-            <div class="demo-text">
-                <h4> Project 2 voice recog</h4>
-            </div>
-            
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer with copyright notice -->
+        <section id="skills" class="section">
+            <div class="container">
+                <div class="project-card animate__animated animate__fadeIn">
+                    <h2>Skills</h2>
+                    <ul>
+                        <li>c </li><li> c++ </li><li> java . js</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="section">
+            <div class="container">
+                <div class="project-card animate__animated animate__fadeIn">
+                    <h2>Certifications</h2>
+                    <ul>
+                        <li>Aws </li><li> react </li><li> node</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section">
+            <div class="container">
+                <div class="project-card animate__animated animate__fadeIn">
+                    <h2>Projects</h2>
+                    <div><h4>Project 1 face detection</h4></div><div><h4> Project 2 voice recog</h4></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer class="footer">
-        &copy; 2023 elevateyourprofile.com
+        &copy; 2024 saikrishna. All rights reserved.
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-

@@ -16,10 +16,18 @@ module.exports = {
           '0%': { width: '0' },
           '100%': { width: '100%' },
         },
+        blink: {
+          '0%, 100%': { borderColor: 'black' },
+          '50%': { borderColor: 'transparent' },
+        },
       },
       animation: {
         textReveal: 'textReveal 2s steps(30, end) forwards',
+        blink: 'blink 1s step-end infinite',
       },
+      backgroundImage: theme => ({
+        'custom-gradient': 'linear-gradient(to right, #bfdbfe, #3b82f6)',
+      }),
     },
   },
   plugins: [],

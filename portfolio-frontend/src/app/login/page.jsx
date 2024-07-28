@@ -11,6 +11,13 @@ const Page = () => {
     const { user, setUser, refresh, setRefresh } = useContext(globalContext);
     const router = useRouter();
 
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + d.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
     const submit = async (e) => {
         e.preventDefault();
         if (username.length > 5) {
@@ -30,7 +37,7 @@ const Page = () => {
                     let data = await res.json();
                     if (data.login === true) {
                         setUser(data);
-                        document.cookie = `token=${data.token}`;
+                        setCookie('token', data.token, 45);;
                         toast.success("Login successful");
                         setRefresh(true);
                         router.push('/');

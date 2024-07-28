@@ -11,39 +11,13 @@ const ResumeModel = require('../models/ResumeModel')
 const QuestionModel = require('../models/Questions')
 const ResultModel = require('../models/Result');
 const AdminModel = require('../models/Admin')
+const Ai = require('../demo')
+const keywords = require('../keywords/keywords')
 
 router.post('/add', async (req, res) => {
-    const keywords = [
-        "LEADERSHIP", "TEAMWORK", "COMMUNICATION", "PROBLEM-SOLVING", "CRITICAL THINKING", "ADAPTABILITY",
-        "TIME MANAGEMENT", "PROJECT MANAGEMENT", "DECISION MAKING", "ANALYTICAL SKILLS", "CREATIVITY",
-        "ATTENTION TO DETAIL", "MULTITASKING", "RESEARCH", "NEGOTIATION", "CONFLICT RESOLUTION",
-        "CUSTOMER SERVICE", "SALES", "MARKETING", "DATA ANALYSIS", "STRATEGIC PLANNING", "BUDGET MANAGEMENT",
-        "PUBLIC SPEAKING", "PRESENTATION SKILLS", "RISK MANAGEMENT", "QUALITY CONTROL", "INTERPERSONAL SKILLS",
-        "LEADERSHIP DEVELOPMENT", "ORGANIZATIONAL SKILLS", "PROBLEM IDENTIFICATION", "SALES STRATEGY",
-        "MARKET RESEARCH", "CLIENT RELATIONS", "TEAM LEADERSHIP", "CROSS-FUNCTIONAL COLLABORATION",
-        "VENDOR MANAGEMENT", "CLIENT ACQUISITION", "MARKET ANALYSIS", "CUSTOMER RELATIONSHIP MANAGEMENT (CRM)",
-        "BUSINESS DEVELOPMENT", "JAVASCRIPT", "PYTHON", "JAVA", "C++", "RUBY", "PHP", "SWIFT", "C#", "SQL", "HTML/CSS",
-        "TYPESCRIPT", "GO", "KOTLIN", "RUST", "MATLAB", "PERL", "SHELL SCRIPTING", "R", "SCALA", "VB.NET",
-        "OBJECTIVE-C", "ASSEMBLY", "DART", "COBOL", "LUA", "VBA", "GROOVY", "PL/SQL", "ABAP",
-        "MICROSOFT OFFICE SUITE", "ADOBE CREATIVE SUITE", "SALESFORCE", "SAP", "TABLEAU", "GOOGLE ANALYTICS",
-        "AUTOCAD", "MATLAB", "HADOOP", "DOCKER", "KUBERNETES", "AWS", "AZURE", "GIT/GITHUB", "JENKINS", "JIRA",
-        "SLACK", "TRELLO", "WORDPRESS", "DRUPAL", "JOOMLA", "SHAREPOINT", "CRM SOFTWARE", "ERP SYSTEMS",
-        "VIRTUALIZATION", "NETWORK ADMINISTRATION", "DEVOPS", "AGILE METHODOLOGY", "SCRUM", "BIG DATA",
-        "HEALTHCARE", "FINANCE", "EDUCATION", "INFORMATION TECHNOLOGY (IT)", "RETAIL", "MANUFACTURING", "REAL ESTATE",
-        "HOSPITALITY", "CONSTRUCTION", "NONPROFIT", "PHARMACEUTICALS", "MARKETING", "E-COMMERCE", "TELECOMMUNICATIONS",
-        "AEROSPACE", "ENERGY", "ENTERTAINMENT", "AUTOMOTIVE", "GOVERNMENT", "ENVIRONMENTAL",
-        "PMP (PROJECT MANAGEMENT PROFESSIONAL)", "CPA (CERTIFIED PUBLIC ACCOUNTANT)", "CFA (CHARTERED FINANCIAL ANALYST)",
-        "PHR (PROFESSIONAL IN HUMAN RESOURCES)", "SHRM-CP (SHRM CERTIFIED PROFESSIONAL)",
-        "CISSP (CERTIFIED INFORMATION SYSTEMS SECURITY PROFESSIONAL)",
-        "CCNA (CISCO CERTIFIED NETWORK ASSOCIATE)", "COMPTIA A+",
-        "AWS CERTIFIED SOLUTIONS ARCHITECT", "GOOGLE CLOUD PROFESSIONAL CLOUD ARCHITECT"
-    ];
-
+    
     let data = "";
     let score = 60;
-    console.log('Received a POST request to /add');
-    console.log(req.body); // This will contain any text fields from your form
-    console.log(req.file); // This will contain information about the uploaded file
     if (!req.file) {
         res.json({
             score: "No file uploaded"
@@ -58,7 +32,9 @@ router.post('/add', async (req, res) => {
 
     for (const keyword of keywords) {
         if (data.includes(keyword)) {
-            score++;
+            if(score < 100){
+                score++;
+            }
         }
     }
 
@@ -349,6 +325,41 @@ router.post('/question', async (req, res) => {
 
 })
 
+//delete question
+router.delete("/question", async (req, res) => {
+    try {
+        const { role, question } = req.body;
+
+        if (!role || !question) {
+            return res.status(400).json({
+                message: false,
+                error: "Role and question are required"
+            });
+        }
+
+        const deleteResult = await QuestionModel.deleteOne({ role, question });
+
+        if (deleteResult.deletedCount > 0) {
+            return res.status(200).json({
+                message: true,
+                info: "Question deleted successfully"
+            });
+        } else {
+            return res.status(404).json({
+                message: false,
+                error: "Question not found"
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            message: false,
+            error: "Internal server error"
+        });
+    }
+});
+
+
 //get questions
 router.get("/questions", async (req, res) => {
     const { role } = req.query
@@ -400,6 +411,43 @@ router.post('/result',async (req,res)=>{
         res.status(201).json({
             message: true,
         });
+    }
+    catch(err){
+        console.log(err)
+        res.json({
+            message : false
+        })
+    }
+})
+
+//delete result
+router.delete('/result',async (req,res)=>{
+    try{
+
+        const {answer} = req.body
+        
+        if (answer){
+
+            let deleteResponse = await ResultModel.deleteOne({answer})
+
+            if (deleteResponse.deletedCount > 0) {
+                return res.status(200).json({
+                    message: true,
+                    info: "Response deleted successfully"
+                });
+            } else {
+                return res.status(404).json({
+                    message: false,
+                    error: "Response not found"
+                });
+            }
+        }
+        else{
+            return res.status(404).json({
+                message: false,
+                error: "Response not found"
+            });
+        }
     }
     catch(err){
         console.log(err)
@@ -573,6 +621,45 @@ router.get('/result', async (req, res) => {
         });
     }
 });
+
+//ai
+
+router.post('/ai', async (req, res) => {
+    try {
+        const { username, text } = req.body;
+
+        // Validate input
+        if (!username || !text) {
+            return res.status(400).json({
+                message: 'Username and text are required.'
+            });
+        }
+
+        // Check if user exists
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found.'
+            });
+        }
+
+        // Call the AI function and get the response
+        const response = await Ai(text);
+
+        // Return the response
+        return res.status(200).json({
+            message: true,
+            response
+        });
+    } catch (err) {
+        console.error('Error occurred:', err); // Log the error for debugging
+        return res.status(500).json({
+            message: 'Internal server error.'
+        });
+    }
+});
+
 
 
 module.exports = router;

@@ -61,18 +61,18 @@ const Portfolio = () => {
     };
 
     return (
-        <div id='portfolio' className="flex flex-col items-center justify-center min-h-screen bg-customDarkBlue text-white p-6 lg:p-12">
-            <h4 className="text-2xl lg:text-3xl font-bold mb-8">Portfolio (Choose Templates)</h4>
+        <div id='portfolio' className="flex flex-col items-center justify-center min-h-screen text-black p-6 lg:p-12">
+            <h4 className="text-2xl lg:text-3xl font-bold mb-8">Portfolio Templates</h4>
             <div className="relative w-full max-w-6xl">
                 {/* Arrow Buttons */}
                 <button
-                    className="hidden md:flex items-center justify-center absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-gray-800 hover:bg-gray-700 transition rounded-full p-2 shadow-lg z-10"
+                    className="flex items-center justify-center absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-gray-800 hover:bg-gray-700 transition rounded-full p-2 shadow-lg z-10"
                     onClick={scrollLeft}
                 >
                     <BsFillArrowLeftCircleFill size={40} />
                 </button>
                 <button
-                    className="hidden md:flex items-center justify-center absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-gray-800 hover:bg-gray-700 transition rounded-full p-2 shadow-lg z-10"
+                    className="flex items-center justify-center absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-gray-800 hover:bg-gray-700 transition rounded-full p-2 shadow-lg z-10"
                     onClick={scrollRight}
                 >
                     <BsFillArrowRightCircleFill size={40} />

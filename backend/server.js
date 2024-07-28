@@ -12,7 +12,6 @@ const temp = require('./models/templates');
 
 require('./config/db')();
 
-require('./models/ResumeModel')()
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

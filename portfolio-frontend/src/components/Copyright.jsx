@@ -1,69 +1,41 @@
-import React from 'react'
+import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="text-center text-lg-start bg-white text-muted">
-
-            <section className="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-
-                <div>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-twitter"></i>
-                    </a>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-google"></i>
-                    </a>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-instagram"></i>
-                    </a>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-linkedin"></i>
-                    </a>
-                    <a href="" className="me-4 link-secondary">
-                        <i className="fab fa-github"></i>
-                    </a>
-                </div>
-
-            </section>
-
-            <section className="">
-                <div className="container text-center text-md-start mt-5">
-
-                    <div className="row mt-3">
-
-                        <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-
-                            <h6 className="text-uppercase fw-bold mb-4">
-                                <i className="fas fa-gem me-3 text-secondary"></i>ApnAInterview Cracker
-                            </h6>
-                            <p>
-                            ApnAInterview Cracker revolutionizes job readiness with AI-driven mock interviews, market insights, and portfolio tools. Our platform empowers users with personalized feedback, industry trends, and ATS-optimized resume templates, ensuring they're prepared for employment. Join us in bridging the gap between education and industry, enhancing your career journey today.
-                            </p>
-                        </div>
-
-                        
-                        <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                            <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
-                            <p><i className="fas fa-home me-3 text-secondary"></i> Hyderabad, HY 10012, India</p>
-                            <p>
-                                <i className="fas fa-envelope me-3 text-secondary"></i>
+        <footer className=" text-black py-8">
+            <div className="container mx-auto px-4 md:px-8">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                    <div className="mb-6 md:mb-0 flex flex-col space-y-4">
+                        <h2 className="text-2xl font-bold mb-2">ApnAInterview Cracker</h2>
+                        <p className="">
+                            Revolutionizes job readiness with AI-driven mock interviews, market insights, and portfolio tools.
+                        </p>
+                        <p className="">
+                            Empowering users with personalized feedback, industry trends, and ATS-optimized resume templates.
+                        </p>
+                    </div>
+                    <div className="flex flex-col md:flex-row gap-8 md:gap-12">
+                        <div className="mb-6 md:mb-0">
+                            <h3 className="text-lg font-semibold mb-2">Contact Us</h3>
+                            <p className=" mb-2">Hyderabad, HY 10012, India</p>
+                            <a href="mailto:ApnAInterview@example.com" className=" hover:text-blue-500">
                                 ApnAInterview@example.com
-                            </p>
-                           
+                            </a>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2">Follow Us</h3>
+                            <a href="https://ApnAInterviewcracker.com" className="hover:text-blue-500">
+                                ApnAInterviewcracker.com
+                            </a>
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <div className="text-center p-4" style={{backgroundColor: "rgba(0, 0, 0, 0.025)"}}>
-                © 2024 Copyright : 
-                <a className="text-reset fw-bold" href="https://mdbootstrap.com/">ApnAInterviewcracker.com</a>
+                <div className="text-center mt-8">
+                    <p className=" text-sm">&copy; 2024 ApnAInterview Cracker. All rights reserved.</p>
+                </div>
             </div>
         </footer>
-    )
-}
+    );
+};
 
 export default Footer;

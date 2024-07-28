@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { globalContext } from '../contextApi/GlobalContext';
-import {  AiOutlineMenu } from 'react-icons/ai'
+import { AiOutlineMenu } from 'react-icons/ai';
 
 const Navbar = () => {
     const router = useRouter();
@@ -15,66 +15,66 @@ const Navbar = () => {
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
         setUser({});
         setData([]);
-        setVisible(false)
-        router.push('/'); // Redirect to login or home page
-    }
+        setVisible(false);
+        router.push('/');
+    };
 
-    const closeButton = (() => {
-        console.log("hi")
-        setVisible(false)
-    })
+    const closeButton = () => {
+        setVisible(false);
+    };
 
     const home = () => {
         router.push('/');
-        setHamVisible(false)
-    }
+        setHamVisible(false);
+    };
 
     const userData = () => {
         router.push('/userdata');
-        setVisible(false)
-    }
+        setVisible(false);
+    };
 
     const resumeView = () => {
         document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' });
-        setHamVisible(false)
-    }
+        setHamVisible(false);
+    };
 
     const portfolioView = () => {
         document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
-        setHamVisible(false)
-    }
+        setHamVisible(false);
+    };
 
     const resumeScore = () => {
         document.getElementById('score')?.scrollIntoView({ behavior: 'smooth' });
-        setHamVisible(false)
-    }
+        setHamVisible(false);
+    };
 
     const mockInterview = () => {
         document.getElementById('mock')?.scrollIntoView({ behavior: 'smooth' });
-        setHamVisible(false)
-    }
+        setHamVisible(false);
+    };
 
-
-    // view profile in small devices
     const viewProfile = () => {
-        setVisible(true)
-        setHamVisible(false)
-    }
+        setVisible(true);
+        setHamVisible(false);
+    };
 
     const loginSm = () => {
-        router.push('/login')
-        setHamVisible(false)
-    }
+        router.push('/login');
+        setHamVisible(false);
+    };
 
     const registerSm = () => {
-        router.push('/register')
+        router.push('/register');
+        setHamVisible(false);
+    };
+
+    const aiChatBot = ()=>{
+        document.getElementById('ai')?.scrollIntoView({ behavior: 'smooth' });
         setHamVisible(false)
     }
 
     return (
-        <nav className='z-10 flex items-center bg-customDarkBlue text-white shadow-md h-20 fixed top-0 w-full p-2'>
-
-
+        <nav className='z-10 flex items-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white shadow-md h-20 fixed top-0 w-full p-2'>
             {/* for small screens */}
             <ul className='block lg:hidden flex items-center justify-between gap-6 w-full p-2'>
                 <li className='flex items-center'>
@@ -84,7 +84,7 @@ const Navbar = () => {
                     <AiOutlineMenu style={{ cursor: "pointer" }} color='white' size={35} />
                 </li>
                 <aside className={`absolute top-0 right-0 bg-white shadow-lg p-6 w-64 rounded-lg ${hamVisible ? 'block' : 'hidden'}`}>
-                    <ul className=''>
+                    <ul>
                         {user.username && (
                             <>
                                 <li onClick={viewProfile} className='flex items-center hover:cursor-pointer mb-2'>
@@ -94,114 +94,87 @@ const Navbar = () => {
                             </>
                         )}
                     </ul>
-
                     <div className='mt-6 flex flex-col space-y-2'>
                         <button onClick={home} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Home</button>
-
-                        {
-                            pathname == '/' ? (
-                                <>
-                                    <button onClick={resumeView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume</button>
-
-                                    <button onClick={portfolioView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Portfolio</button>
-
-                                    <button onClick={resumeScore} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume Score</button>
-
-                                    <button onClick={mockInterview} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Mock Interview</button>
-                                </>
-                            ) : (
-                                <>
-                                </>
-                            )
-                        }
-
-                        {
-                            user.username ? (
-                                <>
-                                </>
-                            ) : (
-                                <>
-                                    <button onClick={loginSm} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Login</button>
-
-                                    <button onClick={registerSm} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Sign up</button>
-                                </>
-                            )
-                        }
-
-
+                        {pathname === '/' && (
+                            <>
+                                <button onClick={resumeView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume</button>
+                                <button onClick={portfolioView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Portfolio</button>
+                                <button onClick={resumeScore} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume Score</button>
+                                <button onClick={mockInterview} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Mock Interview</button>
+                                <button onClick={aiChatBot} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Ai ChatBot</button>
+                            </>
+                        )}
+                        {!user.username ? (
+                            <>
+                                <button onClick={loginSm} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Login</button>
+                                <button onClick={registerSm} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Sign up</button>
+                            </>
+                        ) : null}
                         <button onClick={() => setHamVisible(false)} className='text-red-600 hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Close Menu</button>
                     </div>
                 </aside>
-
-
             </ul>
-
-            <ul className='hidden lg:flex flex items-center justify-start w-3/4 gap-6'>
+            <ul className='hidden lg:flex items-center justify-start w-3/4 gap-6'>
                 <li className='flex items-center'>
                     <img src="logo.png" alt="Logo" height={60} width={60} />
                 </li>
                 <li>
-                    <span onClick={home} className='cursor-pointer text-sm font-semibold hover:text-blue-500 transition-colors'>
+                    <span onClick={home} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
                         Home
                     </span>
                 </li>
-                {
-                    pathname == '/' ? (
-                        <>
-                            <li>
-                                <span onClick={resumeView} className='cursor-pointer text-sm font-semibold  hover:text-blue-500 transition-colors'>
-                                    Resume
-                                </span>
-                            </li>
-                            <li>
-                                <span onClick={portfolioView} className='cursor-pointer text-sm font-semibold hover:text-blue-500 transition-colors'>
-                                    Portfolio
-                                </span>
-                            </li>
-                            <li>
-                                <span onClick={resumeScore} className='cursor-pointer text-sm font-semibold  hover:text-blue-500 transition-colors'>
-                                    Resume Score
-                                </span>
-                            </li>
-                            <li>
-                                <span onClick={mockInterview} className='cursor-pointer text-sm font-semibold hover:text-blue-500 transition-colors'>
-                                    Mock Interview
-                                </span>
-                            </li>
-                        </>
-                    ) :
-                        (
-                            <></>
-                        )
-                }
-
+                {pathname === '/' && (
+                    <>
+                        <li>
+                            <span onClick={resumeView} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Resume
+                            </span>
+                        </li>
+                        <li>
+                            <span onClick={portfolioView} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Portfolio
+                            </span>
+                        </li>
+                        <li>
+                            <span onClick={resumeScore} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Resume Score
+                            </span>
+                        </li>
+                        <li>
+                            <span onClick={mockInterview} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Mock Interview
+                            </span>
+                        </li>
+                        <li>
+                            <span onClick={aiChatBot} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Ai ChatBot
+                            </span>
+                        </li>
+                    </>
+                )}
             </ul>
-            <ul className='hidden lg:flex flex flex-row items-center justify-end w-1/4 gap-6'>
-                {
-                    user.username ? (
-                        <>
-                            <li onClick={() => setVisible(true)} className='flex items-center hover:cursor-pointer'>
-                                <img src="user.png" alt="User Icon" height={40} width={40} className='invert' />
-                                <span className='p-1'>{user.name}</span>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li>
-                                <button onClick={() => router.push('/login')} className='cursor-pointer text-lg font-semibold  hover:text-blue-500 transition-colors' aria-label="Login">
-                                    Login
-                                </button>
-                            </li>
-                            <li>
-                                <button onClick={() => router.push('/register')} className='cursor-pointer text-lg font-semibold  hover:text-blue-500 transition-colors' aria-label="Signup">
-                                    Signup
-                                </button>
-                            </li>
-                        </>
-                    )
-                }
+            <ul className='hidden lg:flex items-center justify-end w-1/4 gap-6'>
+                {user.username ? (
+                    <li onClick={() => setVisible(true)} className='flex items-center hover:cursor-pointer'>
+                        <img src="user.png" alt="User Icon" height={40} width={40} className='invert' />
+                        <span className='p-1'>{user.name}</span>
+                    </li>
+                ) : (
+                    <>
+                        <li>
+                            <button onClick={() => router.push('/login')} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors' aria-label="Login">
+                                Login
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={() => router.push('/register')} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors' aria-label="Signup">
+                                Sign up
+                            </button>
+                        </li>
+                    </>
+                )}
             </ul>
-
             <aside className={`absolute top-5 right-4 z-10 bg-white shadow-lg rounded-lg p-4 flex flex-col space-y-4 ${visible ? 'block' : 'hidden'}`}>
                 <ul className="space-y-2 text-gray-700">
                     <li className="font-semibold">Username: {user.username}</li>
@@ -215,7 +188,7 @@ const Navbar = () => {
                 </div>
             </aside>
         </nav>
-    )
-}
+    );
+};
 
 export default Navbar;
