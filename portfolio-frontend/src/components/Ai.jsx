@@ -1,12 +1,19 @@
 "use client";
-import React from 'react';
+import React , {useContext} from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { globalContext } from '../contextApi/GlobalContext';
+import { toast } from 'react-toastify';
 
 const Ai = () => {
     const router = useRouter();
+    const {user} = useContext(globalContext);
 
     const handleButtonClick = () => {
+        if(!user.username){
+            toast("Login to access")
+            return null
+        }
         router.push('/ai');
     };
 
