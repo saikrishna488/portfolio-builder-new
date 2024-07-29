@@ -1,7 +1,6 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import GlobalContext from '../contextApi/GlobalContext';
-import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import Toastify from '../components/Toastify';
 import Title from '../components/Title';
@@ -28,7 +27,6 @@ export default function RootLayout({ children }) {
         <GlobalContext>
           <Toastify />
           <Navbar />
-          {/* <Header/> */}
           <Title />
           {children}
         </GlobalContext>

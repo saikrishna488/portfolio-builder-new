@@ -67,13 +67,13 @@ const Page = () => {
                 if (/`[\s\S]*`/.test(part) && part.trim().length > 2) {
                     const cleanPart = part.replace(/`/g, '');
                     return (
-                        <div key={index} className="relative bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-2">
+                        <div key={index} className="relative bg-gray-900 text-white p-4 rounded-lg shadow-md mb-2">
                             <pre className="whitespace-pre-wrap overflow-x-auto">{cleanPart}</pre>
                             <button
                                 onClick={() => copyToClipboard(cleanPart)}
-                                className="absolute right-2 top-2 px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="absolute right-4 top-4 px-2 py-1 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                Copy Code
+                                Copy
                             </button>
                         </div>
                     );
@@ -91,7 +91,7 @@ const Page = () => {
                                 {boldParts.map((boldPart, j) => {
                                     if (/\*\*[\s\S]*\*\*/.test(boldPart)) {
                                         return (
-                                            <span key={j} className="font-bold">
+                                            <span key={j} className="font-semibold text-gray-800">
                                                 {boldPart.replace(/\*\*/g, '')}
                                             </span>
                                         );
@@ -110,44 +110,43 @@ const Page = () => {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <div className="p-6 text-center">
-                    <p className="text-lg font-semibold">Login to access</p>
+                    <p className="text-lg font-semibold text-gray-700">Login to access</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <div className="w-full max-w-lg  bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col">
-                <h4 className="text-xl font-semibold text-center mb-2">Chat with AI</h4>
-                <div className="flex-grow overflow-y-auto mb-6 p-2 border border-gray-200 rounded-lg bg-gray-50 h-[calc(100vh-250px)] w-full">
+        <div className="  absolute bottom-0 flex flex-col items-center justify-center p-4  bg-gray-100 w-full" >
+            <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col h-full">
+                <h4 className="text-2xl font-bold text-gray-800 text-center mb-4 py-4 border-b border-gray-200">Chat with AI</h4>
+                <div className="flex-grow flex flex-col h-[calc(100vh-300px)] overflow-y-auto p-4 bg-gray-50">
                     {messages.map((msg, index) => (
-                        <div key={index} className={`mb-2 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
+                        <div key={index} className={`mb-3 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
                             <p className={`font-semibold ${msg.by === user.username ? 'text-blue-600' : 'text-gray-600'}`}>{msg.by}</p>
-                            <div className={`${msg.by === user.username ? 'bg-blue-100' : 'bg-gray-200'} inline-block px-2 py-2 rounded-lg`}>
+                            <div className={`${msg.by === user.username ? 'bg-blue-100' : 'bg-gray-200'} inline-block px-4 py-2 rounded-lg`}>
                                 {formatMessage(msg.message)}
                             </div>
                         </div>
                     ))}
                     <div ref={chatEndRef} />
                 </div>
+                <form className="flex items-center border-t border-gray-200 bg-white p-4" onSubmit={onMessageSend}>
+                    <input
+                        type="text"
+                        value={userMessage}
+                        onChange={(e) => setUserMessage(e.target.value)}
+                        placeholder="Type your message..."
+                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                        type="submit"
+                        className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                        Send
+                    </button>
+                </form>
             </div>
-
-            <form className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 max-w-lg mx-auto" onSubmit={onMessageSend}>
-                <input
-                    type="text"
-                    value={userMessage}
-                    onChange={(e) => setUserMessage(e.target.value)}
-                    placeholder="Enter text"
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    Send
-                </button>
-            </form>
         </div>
     );
 };
