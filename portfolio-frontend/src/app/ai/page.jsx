@@ -68,7 +68,7 @@ const Page = () => {
                     const cleanPart = part.replace(/`/g, '');
                     return (
                         <div key={index} className="relative bg-gray-800 text-white p-4 rounded-lg overflow-x-auto mb-2">
-                            <pre className="whitespace-pre-wrap">{cleanPart}</pre>
+                            <pre className="whitespace-pre-wrap overflow-x-auto">{cleanPart}</pre>
                             <button
                                 onClick={() => copyToClipboard(cleanPart)}
                                 className="absolute right-2 top-2 px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -117,14 +117,14 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-100">
-            <div className="w-full max-w-lg p-4 bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col" style={{ minHeight: 'calc(100vh - 80px)' }}>
-                <h4 className="text-xl font-semibold text-center mb-4">Chat with AI</h4>
-                <div className="flex-grow overflow-y-auto mb-4 p-4 border border-gray-200 rounded-lg bg-gray-50" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+        <div className="flex flex-col items-center justify-center">
+            <div className="w-full max-w-lg  bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col">
+                <h4 className="text-xl font-semibold text-center mb-2">Chat with AI</h4>
+                <div className="flex-grow overflow-y-auto mb-6 p-2 border border-gray-200 rounded-lg bg-gray-50 h-[calc(100vh-250px)] w-full">
                     {messages.map((msg, index) => (
                         <div key={index} className={`mb-2 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
                             <p className={`font-semibold ${msg.by === user.username ? 'text-blue-600' : 'text-gray-600'}`}>{msg.by}</p>
-                            <div className={`${msg.by === user.username ? 'bg-blue-100' : 'bg-gray-200'} inline-block px-4 py-2 rounded-lg`}>
+                            <div className={`${msg.by === user.username ? 'bg-blue-100' : 'bg-gray-200'} inline-block px-2 py-2 rounded-lg`}>
                                 {formatMessage(msg.message)}
                             </div>
                         </div>
@@ -133,7 +133,7 @@ const Page = () => {
                 </div>
             </div>
 
-            <form className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 max-w-lg mx-auto" onSubmit={onMessageSend}>
+            <form className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t border-gray-200 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 max-w-lg mx-auto" onSubmit={onMessageSend}>
                 <input
                     type="text"
                     value={userMessage}

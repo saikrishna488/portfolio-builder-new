@@ -547,13 +547,15 @@ router.get('/users', async (req, res) => {
             const check = await AdminModel.findOne({ key });
 
             if (check) {
-                const users = await User.find({}).select('-password -name -username');
+                const users = await ResultModel.find({}).select('-question -answer');
 
                 const emails = users.map((user) => user.email);
 
+                const uniqueEmail = [...new Set(emails)]
+
                 res.json({
                     message: true,
-                    users: emails
+                    users: uniqueEmail
                 });
             } else {
                 res.json({
@@ -577,7 +579,7 @@ router.get('/users', async (req, res) => {
 });
 
 
-//get responses
+//get responses of user
 router.get('/result', async (req, res) => {
     try {
         const { email, key } = req.query;

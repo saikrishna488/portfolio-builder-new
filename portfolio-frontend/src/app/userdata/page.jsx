@@ -5,7 +5,7 @@ import { globalContext } from '../../contextApi/GlobalContext';
 import { useRouter } from 'next/navigation';
 import Render from '../../components/Render';
 
-const page = () => {
+const Page = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [skills, setSkills] = useState("");
@@ -80,18 +80,34 @@ const page = () => {
 
     if (user.username) {
         return (
-            <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6'>
+            <div className='flex flex-col items-center justify-center min-h-screen p-6'>
                 {refresh ? <Render /> : null}
                 <form className='bg-white p-8 rounded-lg shadow-md w-full max-w-md' onSubmit={submit}>
                     <h2 className="text-2xl font-semibold mb-6 text-center text-gray-700">Update Profile</h2>
+                    <label className='block text-gray-700 mb-2'>Name</label>
                     <input type="text" name="name" value={name} onChange={e => setName(e.target.value)} placeholder='Name (e.g., Harry)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Field</label>
                     <input type="text" name="field" value={field} onChange={e => setField(e.target.value)} placeholder='Field (e.g., Computer Science)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Role</label>
                     <input type="text" name="role" value={role} onChange={e => setRole(e.target.value)} placeholder='Role (e.g., Designing)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Description</label>
                     <input type="text" name="description" value={description} onChange={e => setDescription(e.target.value)} placeholder='Description' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Skills</label>
                     <input type="text" name="skills" value={skills} onChange={e => setSkills(e.target.value)} placeholder='Skills (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Certifications</label>
                     <input type="text" name="certifications" value={certifications} onChange={e => setCertifications(e.target.value)} placeholder='Certifications (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>Projects</label>
                     <input type="text" name="projects" value={projects} onChange={e => setProjects(e.target.value)} placeholder='Projects (e.g., 1,2,3)' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
+                    <label className='block text-gray-700 mb-2'>College</label>
                     <input type="text" name="college" value={college} onChange={e => setCollege(e.target.value)} placeholder='College' required={true} className='mb-4 p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:border-blue-500' />
+                    
                     <button className='bg-blue-500 text-white p-3 rounded-lg w-full hover:bg-blue-600 transition duration-300'>Submit</button>
                 </form>
             </div>
@@ -105,4 +121,4 @@ const page = () => {
     }
 }
 
-export default page;
+export default Page;

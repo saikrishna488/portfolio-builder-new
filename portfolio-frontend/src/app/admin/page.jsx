@@ -154,7 +154,7 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4 sm:p-8">
+    <div className="flex items-center justify-center p-4 sm:p-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         {adminKey ? (
           <>

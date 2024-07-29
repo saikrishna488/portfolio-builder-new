@@ -102,7 +102,7 @@ const Navbar = () => {
                                 <button onClick={portfolioView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Portfolio</button>
                                 <button onClick={resumeScore} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume Score</button>
                                 <button onClick={mockInterview} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Mock Interview</button>
-                                <button onClick={aiChatBot} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Ai ChatBot</button>
+                                <button onClick={aiChatBot} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>AI ChatBot</button>
                             </>
                         )}
                         {!user.username ? (
@@ -148,7 +148,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <span onClick={aiChatBot} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
-                                Ai ChatBot
+                                AI ChatBot
                             </span>
                         </li>
                     </>

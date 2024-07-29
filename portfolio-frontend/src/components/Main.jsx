@@ -12,19 +12,20 @@ const Main = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
             >
-                <motion.div 
-                    className="text-left max-w-3xl"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-                >
-                    <h1 className="text-3xl lg:text-4xl font-bold leading-tight mb-4">
+                <div className="max-w-3xl text-left">
+                    {/* <h1 className="text-3xl lg:text-4xl font-bold leading-tight mb-4">
                         ApnAInterview Cracker
-                    </h1>
-                    <p className="text-lg lg:text-xl font-light">
-                        Revolutionizing job readiness with AI-driven mock interviews, market insights, and portfolio tools. Our platform empowers users with personalized feedback, industry trends, and ATS-optimized resume templates, ensuring they're prepared for employment. Join us in bridging the gap between education and industry, enhancing your career journey today.
+                    </h1> */}
+                    <p className="text-lg lg:text-xl font-light mb-4">
+                        Revolutionizing job readiness with AI-driven mock interviews, market insights, and portfolio tools. Empower yourself with personalized feedback and industry trends. Enhance your career journey today.
                     </p>
-                </motion.div>
+                    <p className="text-lg lg:text-xl font-light mb-4">
+                        Tailored tools and resources for all career levels. Analyze responses with our AI and get actionable recommendations.
+                    </p>
+                    <p className="text-lg lg:text-xl font-light">
+                        Stay ahead with market insights and job market demands. Prepare not just for an interview, but for a successful career.
+                    </p>
+                </div>
             </motion.div>
         </>
     );

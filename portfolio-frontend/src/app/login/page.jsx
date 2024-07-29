@@ -56,9 +56,9 @@ const Page = () => {
     }
 
     return (
-        <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+        <div className='flex items-center justify-center h-full mt-12'>
             {refresh ? <Render /> : null}
-            <div className='bg-white p-8 rounded-lg shadow-lg w-full max-w-sm'>
+            <div className='bg-white p-8 rounded-lg h-full shadow-lg w-full max-w-sm'>
                 <h2 className='text-2xl font-bold mb-6 text-gray-800 text-center'>Login</h2>
                 <form onSubmit={submit}>
                     <div className='mb-4'>
