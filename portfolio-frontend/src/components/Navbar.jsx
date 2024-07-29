@@ -74,9 +74,9 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='z-10 flex items-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white shadow-md h-20 fixed top-0 w-full p-2'>
+        <nav className='z-20 flex items-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white shadow-md h-20 fixed top-0 w-full p-2'>
             {/* for small screens */}
-            <ul className='block lg:hidden flex items-center justify-between gap-6 w-full p-2'>
+            <ul className='block lg:hidden flex items-center justify-between gap-6 w-full'>
                 <li className='flex items-center'>
                     <img onClick={home} src="logo.png" alt="Logo" height={60} width={60} />
                 </li>
