@@ -9,6 +9,7 @@ import Render from '../components/Render';
 import Contributor from '../components/Contributor';
 import Opportunities from '../components/Opportunities';
 import MockInterview from '../components/MockInterview';
+import Assessment from '../components/Assessment';
 import Ai from '../components/Ai';
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <Resume />
         <Score />
         <MockInterview />
+        <Assessment/>
         <Ai />
         <Contributor />
         {/* <Achievements/>

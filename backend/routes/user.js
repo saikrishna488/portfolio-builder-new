@@ -662,6 +662,46 @@ router.post('/ai', async (req, res) => {
     }
 });
 
+router.post('/mockattempts', async (req, res) => {
+    try {
+      const { email } = req.body;
+  
+      if (!email) {
+        return res.json({
+          message: false,
+          days: 'Username is required',
+        });
+      }
+  
+      let results = await ResultModel.find({ email }).sort({ createdAt: -1 }).limit(1);
+  
+      if (!results || results.length === 0) {
+        return res.json({
+          message: true,
+          days: 6
+        });
+      }
+  
+      let date = new Date(results[0].createdAt);
+      let today = new Date();
+  
+      const diffTime = Math.abs(today - date);
+  
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+      return res.json({
+        message: true,
+        days: diffDays,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.json({
+        message: false,
+        error: 'An error occurred',
+      });
+    }
+  });
+
 
 
 module.exports = router;

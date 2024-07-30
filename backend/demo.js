@@ -30,12 +30,5 @@ const main = async (message) => {
   return response;
 }
 
-// // Example usage:
-// const userMessage = "bye";
-// main(userMessage).then(response => {
-//   console.log("Final Response:", response);
-// }).catch(error => {
-//   console.error("Error:", error);
-// });
 
 module.exports = main;

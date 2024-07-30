@@ -21,6 +21,26 @@ const MockInterview = () => {
             }
             else {
                 if (role) {
+                    const res1 = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/mockattempts", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email: user.email })
+                    });
+    
+                    const data1 = await res1.json();
+    
+                    if (data1.message !== true) {
+                        return;
+                    }
+    
+                    if (data1.days < 7) {
+                        toast("You can only attempt once a week.");
+                        return;
+                    }
+
+
                     const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/questions?role=" + role, {
                         method: "GET",
                     })
@@ -35,7 +55,6 @@ const MockInterview = () => {
                         })
 
                         setQuestions(qns)
-                        console.log(qns)
                         router.push('/mock')
                     }
                 }

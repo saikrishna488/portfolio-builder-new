@@ -2,15 +2,17 @@
 import { useContext, useEffect, useState } from "react";
 import { globalContext } from '../../contextApi/GlobalContext';
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Admin = () => {
+  const router = useRouter();
   const [key, setKey] = useState("");
   const { adminKey, setAdminKey } = useContext(globalContext);
   const [users, setUsers] = useState([]);
   const [responses, setResponses] = useState([]);
   const [currentUser, setCurrentUser] = useState('');
   const [role, setRole] = useState("");
-  const [question, setQuestion] = useState("")
+  const [question, setQuestion] = useState("");
 
   useEffect(() => {
     if (adminKey) {
@@ -18,30 +20,24 @@ const Admin = () => {
         const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/users?key=' + adminKey, {
           method: 'GET',
         });
-
         const data = await res.json();
-
         if (data.message === true) {
           setUsers(data.users);
         } else {
           toast("Error occurred");
         }
       };
-
       fetchUsers();
     }
   }, [adminKey]);
 
   const onFormSubmit = (e) => {
     e.preventDefault();
-
     const fetchAdmin = async () => {
       const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/admin?key=' + key, {
         method: 'GET',
       });
-
       const data = await res.json();
-
       if (data.message === true) {
         setAdminKey(key);
         toast("Verified, welcome");
@@ -49,7 +45,6 @@ const Admin = () => {
         toast("Invalid key");
       }
     };
-
     fetchAdmin();
     setKey("");
   };
@@ -62,7 +57,6 @@ const Admin = () => {
       const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/result?key=' + adminKey + "&email=" + currentUser, {
         method: 'GET',
       });
-
       const data = await res.json();
       if (data.message === true) {
         if (data.responses.length < 1) {
@@ -78,23 +72,17 @@ const Admin = () => {
 
   const onQuestionSubmit = (e) => {
     e.preventDefault();
-
     if (!role || !question) {
       return null;
     }
-
     const fetching = async () => {
       const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/question', {
         method: 'POST',
         headers: {
           'Content-Type': "application/json"
         },
-        body: JSON.stringify({
-          role,
-          question
-        })
+        body: JSON.stringify({ role, question })
       });
-
       const data = await res.json();
       if (data.message === true) {
         toast("Question Added");
@@ -113,12 +101,8 @@ const Admin = () => {
         headers: {
           'Content-Type': "application/json"
         },
-        body: JSON.stringify({
-          role,
-          question
-        })
+        body: JSON.stringify({ role, question })
       });
-
       const data = await res.json();
       if (data.message === true) {
         toast("Question Deleted");
@@ -137,11 +121,8 @@ const Admin = () => {
         headers: {
           'Content-Type': "application/json"
         },
-        body: JSON.stringify({
-          answer
-        })
+        body: JSON.stringify({ answer })
       });
-
       const data = await res.json();
       if (data.message === true) {
         toast("Response Deleted");
@@ -154,15 +135,15 @@ const Admin = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-4 sm:p-8">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+    <div className="flex items-center justify-center p-6 sm:p-12">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
         {adminKey ? (
           <>
             <h2 className="text-3xl font-bold mb-6 text-gray-800">Admin Panel</h2>
-            <div className="mb-4">
+            <div className="mb-6">
               <label className="block text-gray-700 mb-2">Select a user:</label>
               <select
-                className="w-full p-2 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg"
                 value={currentUser}
                 onChange={(e) => setCurrentUser(e.target.value)}
               >
@@ -174,13 +155,13 @@ const Admin = () => {
             </div>
             <button
               onClick={fetchUserResponses}
-              className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+              className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 mb-6"
             >
               Fetch User Responses
             </button>
             {responses.length > 0 && (
-              <div className="mt-4">
-                <h3 className="text-xl font-semibold mb-2 text-gray-800">User Responses:</h3>
+              <div className="mt-6">
+                <h3 className="text-xl font-semibold mb-4 text-gray-800">User Responses:</h3>
                 <div className="space-y-4">
                   {responses.map((response, i) => (
                     <div key={i} className="p-4 border border-gray-300 rounded-lg bg-gray-100">
@@ -188,7 +169,7 @@ const Admin = () => {
                       <p className="text-gray-700">{response.answer}</p>
                       <button
                         onClick={() => deleteResponse(response.answer)}
-                        className="mt-2 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
+                        className="mt-2 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
                       >
                         Delete Response
                       </button>
@@ -205,7 +186,7 @@ const Admin = () => {
                   <select
                     value={role}
                     onChange={(e) => setRole(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                   >
                     <option value="">Select a Role</option>
                     <option value="databaseengineer">Database Engineer</option>
@@ -218,7 +199,7 @@ const Admin = () => {
                     type="text"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg"
+                    className="w-full p-3 border border-gray-300 rounded-lg"
                     placeholder="Enter question"
                   />
                 </div>
@@ -226,16 +207,17 @@ const Admin = () => {
                   <input
                     type="submit"
                     value="Add Question"
-                    className="w-full bg-green-500 text-white p-2 rounded-lg hover:bg-green-700 transition-colors duration-300 cursor-pointer"
+                    className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-700 transition-colors duration-300 cursor-pointer"
                   />
                   <button
                     type="button"
                     onClick={deleteQuestion}
-                    className="w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
+                    className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
                   >
                     Delete Question
                   </button>
                 </div>
+                <button onClick={() => router.push('/admin/assessment')} className="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-700 transition-colors duration-300 mt-4">Visit Assessment Panel</button>
               </form>
             </div>
           </>
@@ -247,7 +229,7 @@ const Admin = () => {
                 <input
                   value={key}
                   onChange={(e) => setKey(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-lg"
+                  className="w-full p-3 border border-gray-300 rounded-lg"
                   type="text"
                   placeholder="Admin key"
                 />
@@ -256,7 +238,7 @@ const Admin = () => {
                 <input
                   type="submit"
                   value="Submit"
-                  className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
+                  className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300 cursor-pointer"
                 />
               </div>
             </form>

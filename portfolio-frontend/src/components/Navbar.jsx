@@ -53,6 +53,11 @@ const Navbar = () => {
         setHamVisible(false);
     };
 
+    const assessmentView = () => {
+        document.getElementById('assess')?.scrollIntoView({ behavior: 'smooth' });
+        setHamVisible(false);
+    };
+
     const viewProfile = () => {
         setVisible(true);
         setHamVisible(false);
@@ -74,11 +79,11 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='z-20 flex items-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white shadow-md h-20 fixed top-0 w-full p-2'>
+        <nav className='z-20 flex items-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white shadow-md h-16 fixed top-0 w-full m-0'>
             {/* for small screens */}
-            <ul className='block lg:hidden flex items-center justify-between gap-6 w-full'>
+            <ul className='flex lg:hidden items-center justify-between gap-6 w-full px-2 m-0'>
                 <li className='flex items-center'>
-                    <img onClick={home} src="logo.png" alt="Logo" height={60} width={60} />
+                    <img onClick={home} src="logo.png" alt="Logo" height={54} width={54} />
                 </li>
                 <li onClick={() => setHamVisible(true)} className='flex items-center'>
                     <AiOutlineMenu style={{ cursor: "pointer" }} color='white' size={35} />
@@ -102,6 +107,7 @@ const Navbar = () => {
                                 <button onClick={portfolioView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Portfolio</button>
                                 <button onClick={resumeScore} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Resume Score</button>
                                 <button onClick={mockInterview} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Mock Interview</button>
+                                <button onClick={assessmentView} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>Assessments</button>
                                 <button onClick={aiChatBot} className='text-black hover:bg-gray-100 py-2 px-4 rounded-lg transition duration-200 text-left'>AI ChatBot</button>
                             </>
                         )}
@@ -115,9 +121,9 @@ const Navbar = () => {
                     </div>
                 </aside>
             </ul>
-            <ul className='hidden lg:flex items-center justify-start w-3/4 gap-6'>
+            <ul className='hidden lg:flex items-center justify-start w-3/4 gap-6 px-2 m-0'>
                 <li className='flex items-center'>
-                    <img src="logo.png" alt="Logo" height={60} width={60} />
+                    <img src="logo.png" alt="Logo" height={54} width={54} />
                 </li>
                 <li>
                     <span onClick={home} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
@@ -147,6 +153,11 @@ const Navbar = () => {
                             </span>
                         </li>
                         <li>
+                            <span onClick={assessmentView} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
+                                Assessments
+                            </span>
+                        </li>
+                        <li>
                             <span onClick={aiChatBot} className='cursor-pointer text-sm font-semibold hover:text-blue-200 transition-colors'>
                                 AI ChatBot
                             </span>
@@ -154,7 +165,7 @@ const Navbar = () => {
                     </>
                 )}
             </ul>
-            <ul className='hidden lg:flex items-center justify-end w-1/4 gap-6'>
+            <ul className='hidden lg:flex items-center justify-end w-1/4 gap-6 px-2 py-0 m-0'>
                 {user.username ? (
                     <li onClick={() => setVisible(true)} className='flex items-center hover:cursor-pointer'>
                         <img src="user.png" alt="User Icon" height={40} width={40} className='invert' />

@@ -19,6 +19,7 @@ app.use(express.static('public'));
 app.use(upload.single('file'));
 
 app.use('/',require('./routes/user'));
+app.use('/',require('./routes/test'))
 
 app.get('/',(req,res)=>{
     res.send("backend is live");
