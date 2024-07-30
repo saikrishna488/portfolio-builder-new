@@ -117,10 +117,10 @@ const Page = () => {
     }
 
     return (
-        <div className="  absolute bottom-0 flex flex-col items-center justify-center p-0 m-0  bg-gray-100 w-full" >
+        <div className=" absolute bottom-0 flex flex-col items-center justify-center p-0 m-0 w-full" >
             <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col h-full">
                 <h4 className="text-2xl font-bold text-gray-800 text-center mb-4 py-4 border-b border-gray-200">Chat with AI</h4>
-                <div className="flex-grow flex flex-col h-[calc(100vh-300px)] overflow-y-auto p-2 m-0 bg-gray-50">
+                <div className="flex-grow flex flex-col overflow-y-auto p-2 m-0 bg-gray-50" style={{ height: 'calc(100vh - 350px)' }}>
                     {messages.map((msg, index) => (
                         <div key={index} className={`mb-3 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
                             <p className={`font-semibold ${msg.by === user.username ? 'text-blue-600' : 'text-gray-600'}`}>{msg.by}</p>
