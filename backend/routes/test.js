@@ -239,7 +239,7 @@ router.post('/attempts', async (req, res) => {
       if (!results || results.length === 0) {
         return res.json({
           message: true,
-          days: 6
+          days: 7
         });
       }
   
