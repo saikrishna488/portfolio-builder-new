@@ -106,21 +106,21 @@ const Page = () => {
         }
     };
 
-    if (!user.username) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="p-6 text-center">
-                    <p className="text-lg font-semibold text-gray-700">Login to access</p>
-                </div>
-            </div>
-        );
-    }
+    // if (!user.username) {
+    //     return (
+    //         <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    //             <div className="p-6 text-center">
+    //                 <p className="text-lg font-semibold text-gray-700">Login to access</p>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className=" absolute bottom-0 flex flex-col items-center justify-center p-0 m-0 w-full" >
             <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col h-full">
-                <h4 className="text-2xl font-bold text-gray-800 text-center mb-4 py-4 border-b border-gray-200">Chat with AI</h4>
-                <div className="flex-grow flex flex-col overflow-y-auto p-2 m-0 bg-gray-50" style={{ height: 'calc(100vh - 350px)' }}>
+                <h4 className="text-2xl font-bold text-gray-800 text-center mb-0 py-2 border-b border-gray-200">Chat with AI</h4>
+                <div className="flex-grow flex flex-col overflow-y-auto p-2 m-0 bg-gray-50" style={{ height: 'calc(100vh - 300px)' }}>
                     {messages.map((msg, index) => (
                         <div key={index} className={`mb-3 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
                             <p className={`font-semibold ${msg.by === user.username ? 'text-blue-600' : 'text-gray-600'}`}>{msg.by}</p>

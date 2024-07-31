@@ -34,6 +34,7 @@ const MockInterview = () => {
                     if (data1.message !== true) {
                         return;
                     }
+                    console.log(data1)
     
                     if (data1.days < 7) {
                         toast("You can only attempt once a week.");
