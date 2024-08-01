@@ -8,6 +8,7 @@ const Page = () => {
     const { questions, user } = useContext(globalContext);
     const [result, setResult] = useState("");
     const [loading, setLoading] = useState(false);
+    const [answers, setAnswers] = useState([])
 
     const handleOptionChange = (question, selectedAnswer, role) => {
         setSelectedOptions(prevSelectedOptions => {
@@ -43,6 +44,7 @@ const Page = () => {
 
             if (data.message) {
                 setResult(data.result);
+                setAnswers(data.answers)
             } else {
                 console.error('Evaluation failed:', data.error);
             }
@@ -63,8 +65,8 @@ const Page = () => {
 
     if (result !== "") {
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <div className="flex flex-col items-center justify-center min-h-screen py-8">
+                <div className="bg-white p-6 rounded-lg shadow-lg text-center mb-8">
                     <div className="text-3xl font-bold text-gray-900 mb-4">
                         Result
                     </div>
@@ -72,9 +74,39 @@ const Page = () => {
                         You scored {result} out of {selectedOptions.length}
                     </div>
                 </div>
+                <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
+                    {
+                        answers && answers.map((item, i) => (
+                            <div key={i} className="mb-6">
+                                <p className="text-lg font-medium text-gray-800 mb-2">{i + 1}. {item.question}</p>
+                                <form className="space-y-2">
+                                    {
+                                        item.options.map((option, index) => (
+                                            <div key={index} className="flex items-center space-x-2">
+                                                <input 
+                                                    type="radio" 
+                                                    name={`question${i}`} 
+                                                    value={option} 
+                                                    id={`question${i}_option${index}`} 
+                                                    checked={option === item.answer} 
+                                                    readOnly 
+                                                    className="form-radio h-4 w-4 text-blue-600"
+                                                />
+                                                <label htmlFor={`question${i}_option${index}`} className="text-gray-700">
+                                                    {option}
+                                                </label>
+                                            </div>
+                                        ))
+                                    }
+                                </form>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         );
     }
+    
 
 
     if (!user.username) {

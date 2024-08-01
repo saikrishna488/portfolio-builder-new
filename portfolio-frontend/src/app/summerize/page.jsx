@@ -57,9 +57,9 @@ const Page = () => {
     }
 
     return (
-        <div className="flex items-center justify-center mt-4 p-2">
+        <div className="flex items-center justify-center p-2">
             <div className="bg-white shadow-2xl rounded-lg p-2 max-w-lg w-full border border-gray-300">
-                <h4 className="text-4xl font-extrabold mb-6 text-center text-gray-900">AI Text Summarizer</h4>
+                <h4 className="text-2xl font-extrabold mb-6 text-center text-gray-900">AI Text Summarizer</h4>
                 <form onSubmit={getResponse} className="space-y-6">
                     <div className="relative">
                         <textarea
@@ -67,7 +67,7 @@ const Page = () => {
                             onChange={(e) => setText(e.target.value)}
                             placeholder="place text to summarize..."
                             rows="6"
-                            className="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+                            className="w-full px-2 py-3 border border-gray-300 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                         />
                     </div>
                     <button
@@ -78,7 +78,7 @@ const Page = () => {
                     </button>
                 </form>
                 <div className="mt-8">
-                    <h5 className="text-2xl font-semibold mb-4 text-blue-600 text-center">Response</h5>
+                    <h5 className="text-lg font-semibold mb-4 text-blue-600 text-center">Response</h5>
                     <div className="bg-blue-50 border border-blue-300 shadow-inner p-2 rounded-lg h-80 overflow-y-auto">
                         {loading ? (
                             <div className="flex items-center justify-center h-full">

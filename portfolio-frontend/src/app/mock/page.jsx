@@ -65,7 +65,6 @@ const MockInterview = () => {
 
             if (data.message == true) {
                 toast("You will receive your result soon via mail")
-                console.log(data)
                 router.push('/')
             }
             else {

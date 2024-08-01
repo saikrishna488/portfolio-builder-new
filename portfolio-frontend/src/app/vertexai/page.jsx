@@ -58,7 +58,7 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center lg:m-0 mt-16 p-2 lg:p-2">
+        <div className="flex flex-col items-center justify-center lg:m-0 p-2 lg:p-2">
             <div className="bg-white shadow-lg rounded-lg p-6 max-w-md w-full border border-gray-200">
                 <h4 className="text-2xl font-semibold mb-4 text-center text-gray-800">Vertex AI</h4>
                 <form onSubmit={getResponse} className="flex flex-col space-y-4">

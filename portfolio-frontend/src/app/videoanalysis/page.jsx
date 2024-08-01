@@ -60,7 +60,7 @@ const Page = () => {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center p-2 lg:mt-4 mt-16 ">
+        <div className="flex flex-col items-center justify-center p-2 lg:mt-4 ">
             <div className="bg-white shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
                 <h4 className="text-3xl font-bold mb-6 text-center text-gray-900">AI Video Analysis</h4>
                 <form onSubmit={getResponse} className="space-y-6">

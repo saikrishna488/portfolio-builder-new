@@ -36,8 +36,9 @@ const Assessment = () => {
                     return;
                 }
 
-                if (data1.days < 7) {
-                    toast("You can only attempt once a week.");
+                console.log(data1.days)
+                if (data1.days < 1) {
+                    toast("You can only attempt once in a day.");
                     return;
                 }
 

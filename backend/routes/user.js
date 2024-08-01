@@ -671,7 +671,6 @@ router.post('/mockattempts', async (req, res) => {
       if (!email) {
         return res.json({
           message: false,
-          days: 'Username is required',
         });
       }
   
@@ -680,17 +679,25 @@ router.post('/mockattempts', async (req, res) => {
       if (!results || results.length === 0) {
         return res.json({
           message: true,
-          days: 7
+          days: 1
         });
       }
-  
+
       let date = new Date(results[0].createdAt);
       let today = new Date();
   
       const diffTime = Math.abs(today - date);
-  
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
+      const diffHrs= diffTime / (1000 * 60 * 60);
+
+      let diffDays;
+
+      if(diffHrs<24){
+        diffDays = 0 
+      }
+      else{
+        diffDays = Math.ceil(diffHrs / (24))
+      }
+
       return res.json({
         message: true,
         days: diffDays,

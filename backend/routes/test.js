@@ -57,38 +57,37 @@ router.post('/test', async (req, res) => {
 
 //get questions with options
 
-router.get('/test',async(req,res)=>{
-    try{
-        const {role, username} = req.query;
+router.get('/test', async (req, res) => {
+    try {
+        const { role, username } = req.query;
 
-        if(role && username){
+        if (role && username) {
 
-            let user = await User.find({username})
+            let user = await User.find({ username })
 
-            if(!user){
+            if (!user) {
                 return res.json({
-                    message : false,
-                }) 
+                    message: false,
+                })
             }
-            
-            let questions = await TestModel.find({role}).select('-answer');
-            console.log(questions)
+
+            let questions = await TestModel.find({ role }).select('-answer');
 
             return res.json({
-                message : true,
-                questions : questions
+                message: true,
+                questions: questions
             })
         }
-        else{
+        else {
             res.json({
-                message : false
+                message: false
             })
         }
     }
-    catch(err){
+    catch (err) {
         print(err)
         res.json({
-            message : false
+            message: false
         })
     }
 })
@@ -102,14 +101,13 @@ router.get('/testquestions', async (req, res) => {
 
         if (role && adminKey) {
             // Check if the admin exists
-            const admin = await AdminModel.findOne({key: adminKey });
+            const admin = await AdminModel.findOne({ key: adminKey });
 
             if (!admin) {
                 return res.status(403).json({
                     message: 'Unauthorized access'
                 });
             }
-            console.log(admin)
 
             // Fetch questions based on the role
             const questions = await TestModel.find({ role })
@@ -147,7 +145,7 @@ router.post('/evaluate', async (req, res) => {
 
                 const find = await TestModel.findOne({ question, answer });
 
-                if (find) { 
+                if (find) {
                     score += 1;
                 }
             }
@@ -156,12 +154,15 @@ router.post('/evaluate', async (req, res) => {
             let result = TestResultModel.create({
                 role,
                 username,
-                result : score
+                result: score
             })
+
+            const answers = await TestModel.find({})
 
             return res.status(200).json({
                 message: true,
-                result: score
+                result: score,
+                answers: answers
             });
         } else {
             return res.status(400).json({
@@ -225,78 +226,84 @@ router.delete('/test', async (req, res) => {
 
 router.post('/attempts', async (req, res) => {
     try {
-      const { username } = req.body;
-  
-      if (!username) {
+        const { username } = req.body;
+
+        if (!username) {
+            return res.json({
+                message: false,
+                days: 'Username is required',
+            });
+        }
+
+        let results = await TestResultModel.find({ username }).sort({ createdAt: -1 }).limit(1);
+
+        if (!results || results.length === 0) {
+            return res.json({
+                message: true,
+                days: 1
+            });
+        }
+
+        let date = new Date(results[0].createdAt);
+        let today = new Date();
+
+        const diffTime = Math.abs(today - date);
+        const diffHours = diffTime / (1000 * 60 * 60);  // Difference in hours
+
+        let diffDays;
+        if (diffHours < 24) {
+            diffDays = 0;
+        } else {
+            diffDays = Math.ceil(diffHours / 24);  // Difference in days
+        }
+
         return res.json({
-          message: false,
-          days: 'Username is required',
+            message: true,
+            days: diffDays,
         });
-      }
-  
-      let results = await TestResultModel.find({ username }).sort({ createdAt: -1 }).limit(1);
-  
-      if (!results || results.length === 0) {
-        return res.json({
-          message: true,
-          days: 7
-        });
-      }
-  
-      let date = new Date(results[0].createdAt);
-      let today = new Date();
-  
-      const diffTime = Math.abs(today - date);
-  
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  
-      return res.json({
-        message: true,
-        days: diffDays,
-      });
     } catch (err) {
-      console.log(err);
-      return res.json({
-        message: false,
-        error: 'An error occurred',
-      });
+        console.log(err);
+        return res.json({
+            message: false,
+            error: 'An error occurred',
+        });
     }
-  });
+});
 
 
-  router.post('/results', async (req, res) => {
+router.post('/results', async (req, res) => {
     try {
-      const { username } = req.body;
-  
-      if (!username) {
+        const { username } = req.body;
+
+        if (!username) {
+            return res.json({
+                message: false,
+                days: 'Username is required',
+            });
+        }
+
+        let results = await TestResultModel.find({ username })
+
+        if (!results || results.length === 0) {
+            return res.json({
+                message: false,
+            });
+        }
+
         return res.json({
-          message: false,
-          days: 'Username is required',
+            message: true,
+            results
         });
-      }
-  
-      let results = await TestResultModel.find({ username })
-  
-      if (!results || results.length === 0) {
-        return res.json({
-          message: false,
-        });
-      }
-  
-      return res.json({
-        message: true,
-        results
-      });
 
 
     } catch (err) {
-      console.log(err);
-      return res.json({
-        message: false,
-        error: 'An error occurred',
-      });
+        console.log(err);
+        return res.json({
+            message: false,
+            error: 'An error occurred',
+        });
     }
-  });
+});
 
 
 
