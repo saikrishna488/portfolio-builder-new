@@ -57,8 +57,8 @@ const Page = () => {
     }
 
     return (
-        <div className="flex items-center justify-center mt-4 p-8">
-            <div className="bg-white shadow-2xl rounded-lg p-8 max-w-lg w-full border border-gray-300">
+        <div className="flex items-center justify-center mt-4 p-2">
+            <div className="bg-white shadow-2xl rounded-lg p-2 max-w-lg w-full border border-gray-300">
                 <h4 className="text-4xl font-extrabold mb-6 text-center text-gray-900">AI Text Summarizer</h4>
                 <form onSubmit={getResponse} className="space-y-6">
                     <div className="relative">
@@ -79,7 +79,7 @@ const Page = () => {
                 </form>
                 <div className="mt-8">
                     <h5 className="text-2xl font-semibold mb-4 text-blue-600 text-center">Response</h5>
-                    <div className="bg-blue-50 border border-blue-300 shadow-inner p-4 rounded-lg h-80 overflow-y-auto">
+                    <div className="bg-blue-50 border border-blue-300 shadow-inner p-2 rounded-lg h-80 overflow-y-auto">
                         {loading ? (
                             <div className="flex items-center justify-center h-full">
                                 <div className="w-8 h-8 border-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
