@@ -109,6 +109,7 @@ router.post('/login', async (req, res) => {
                 });
                 res.json({
                     login: true,
+                    id:user.id,
                     username,
                     name: user.name,
                     email: user.email,
@@ -145,7 +146,8 @@ router.post('/jwt', async (req, res) => {
                     login: true,
                     name: req.user.name,
                     username: req.user.username,
-                    email: req.user.email
+                    email: req.user.email,
+                    id: req.user.id
                 });
             }
             else {

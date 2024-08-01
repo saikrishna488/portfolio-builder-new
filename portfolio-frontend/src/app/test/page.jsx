@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useContext } from 'react';
 import { globalContext } from '../../contextApi/GlobalContext';
+import { toast } from 'react-toastify';
 
 const Page = () => {
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -17,6 +18,11 @@ const Page = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        if(selectedOptions.length<1){
+            toast("Attempt atleast one question")
+            return null
+        }
         setLoading(true);
 
         try {
@@ -26,10 +32,10 @@ const Page = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     responses: selectedOptions,
                     username: user.username,
-                    role 
+                    role
                 })
             });
 
@@ -58,15 +64,29 @@ const Page = () => {
     if (result !== "") {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="text-2xl font-bold text-gray-800">
-                    Result: {result} out of {selectedOptions.length}
+                <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <div className="text-3xl font-bold text-gray-900 mb-4">
+                        Result
+                    </div>
+                    <div className="text-xl font-semibold text-gray-700">
+                        You scored {result} out of {selectedOptions.length}
+                    </div>
                 </div>
             </div>
         );
     }
 
+
+    if (!user.username) {
+        return (
+            <>
+                <h4>Access From Homepage</h4>
+            </>
+        )
+    }
+
     return (
-        <div className="p-6 bg-gray-100 flex flex-col items-center">
+        <div className="p-6 bg-gray-100 flex flex-col items-center min-h-screen">
             <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Assessment</h2>
                 <form onSubmit={onSubmit}>
@@ -82,7 +102,7 @@ const Page = () => {
                                             type="radio"
                                             name={`question-${index}`}
                                             value={option}
-                                            onChange={() => handleOptionChange(questionItem.question, option,questionItem.role)}
+                                            onChange={() => handleOptionChange(questionItem.question, option, questionItem.role)}
                                             className="mr-2 text-blue-600 focus:ring-blue-500"
                                         />
                                         {option}
@@ -102,6 +122,7 @@ const Page = () => {
                 </form>
             </div>
         </div>
+
     );
 };
 

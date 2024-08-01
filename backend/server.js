@@ -20,6 +20,7 @@ app.use(upload.single('file'));
 
 app.use('/',require('./routes/user'));
 app.use('/',require('./routes/test'))
+app.use('/',require('./routes/vertex'))
 
 app.get('/',(req,res)=>{
     res.send("backend is live");
