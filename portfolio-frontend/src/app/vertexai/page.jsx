@@ -2,7 +2,6 @@
 import React, { useContext, useState } from 'react';
 import { globalContext } from '../../contextApi/GlobalContext';
 import { toast } from 'react-toastify';
-import { totalmem } from 'os';
 
 const Page = () => {
     const { user } = useContext(globalContext);

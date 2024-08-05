@@ -72,7 +72,7 @@ const Assessment = () => {
     return (
         <div id="assess" className="flex flex-col items-center justify-center p-6 min-h-screen">
             <div className="max-w-lg w-full bg-white shadow-xl rounded-lg p-8 border border-gray-200">
-                <h4 className="text-3xl font-bold text-gray-900 mb-6 text-center">Assessment</h4>
+                <h4 className="text-3xl font-bold text-gray-900 mb-6 text-center">Mock Assessment</h4>
                 <div className="flex flex-col space-y-6">
                     <div>
                         <label htmlFor="role" className="block text-gray-700 font-medium mb-2">Select Role</label>
@@ -92,7 +92,7 @@ const Assessment = () => {
                         className="w-full px-4 py-3 bg-blue-600 text-white font-semibold rounded-md shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out"
                         onClick={fetchOnClick}
                     >
-                        Start Mock Interview
+                        Start Mock Assessment
                     </button>
                 </div>
             </div>
