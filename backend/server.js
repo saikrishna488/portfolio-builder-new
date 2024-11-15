@@ -23,7 +23,7 @@ app.use('/',require('./routes/test'))
 app.use('/',require('./routes/vertex'))
 
 app.get('/',(req,res)=>{
-    res.send("backend is live");
+    res.send("backend is live"); 
 });
 
 app.listen(port, () => {
