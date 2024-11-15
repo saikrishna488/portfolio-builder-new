@@ -65,9 +65,9 @@ const Page = () => {
 
     if (result !== "") {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen py-8">
-                <div className="bg-white p-6 rounded-lg shadow-lg text-center mb-8">
-                    <div className="text-3xl font-bold text-gray-900 mb-4">
+            <div className="flex flex-col items-center justify-center min-h-screen py-8 pt-20">
+                <div className="bg-white p-6 rounded-lg border border-gray-200 text-center mb-8">
+                    <div className="text-3xl font-bold text-gray-900 mb-4 border-b border-gray-200">
                         Result
                     </div>
                     <div className="text-xl font-semibold text-gray-700">
@@ -118,7 +118,7 @@ const Page = () => {
     }
 
     return (
-        <div className="p-6 bg-gray-100 flex flex-col items-center min-h-screen">
+        <div className="p-6 bg-gray-100 flex flex-col items-center min-h-screen pt-20">
             <div className="w-full max-w-3xl bg-white p-8 rounded-lg shadow-lg">
                 <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Assessment</h2>
                 <form onSubmit={onSubmit}>

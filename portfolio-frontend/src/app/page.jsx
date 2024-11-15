@@ -1,33 +1,25 @@
 "use client";
 import Main from '../components/Main';
-import Portfolio from '../components/Portfolio';
-import Resume from '../components/Resume';
-import Score from '../components/Score';
 import Vertex from '../components/VertexAI';
 import Copyright from '../components/Copyright';
-import Render from '../components/Render';
+import Green from '../components/Green';
 import Contributor from '../components/Contributor';
 import Opportunities from '../components/Opportunities';
-import MockInterview from '../components/MockInterview';
-import Assessment from '../components/Assessment';
-import Ai from '../components/Ai';
+import FAQ from '../components/FAQ';
+import Tools from '../components/Tools';
 
 export default function Home() {
   return (
     <>
-        <Render />
         <Main />
-        <Portfolio />
+        <Tools/>
         <Vertex />
-        <Resume />
-        <Score />
-        <MockInterview />
-        <Assessment/>
-        <Ai />
         <Contributor />
         {/* <Achievements/>
         <BlogRedirect/> */}
         <Opportunities />
+        <Green/>
+        <FAQ/>
         <Copyright />
     </>
   );

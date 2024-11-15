@@ -14,7 +14,8 @@ const Page = () => {
         e.preventDefault();
 
         if(!text || !url){
-            toast("please enter url and text")
+            toast("Please enter URL and message.");
+            return;
         }
         if (!user) {
             return null;
@@ -31,20 +32,20 @@ const Page = () => {
                 body: JSON.stringify({
                     videoUrl: url,
                     text,
-                    id: user.id
+                    id: user._id
                 }),
             });
 
             const data = await res.json();
 
             if (!data.message) {
-                toast.error('Error occurred, contact support team');
+                toast.error('Error occurred, please contact support.');
                 setResponse('');
             } else {
                 setResponse(data.response);
             }
         } catch (error) {
-            toast.error('An unexpected error occurred');
+            toast.error('An unexpected error occurred.');
         } finally {
             setLoading(false);
         }
@@ -53,16 +54,19 @@ const Page = () => {
         setUrl('');
     };
 
-    if(!user.username){
+    if (!user.username) {
         return (
-            <h4>Login to access</h4>
-        )
+            <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                <h4 className="text-xl text-gray-800 font-semibold">Please log in to access the AI Video Analysis.</h4>
+            </div>
+        );
     }
 
     return (
-        <div className="flex flex-col items-center justify-center p-2 lg:mt-4 ">
-            <div className="bg-white shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
-                <h4 className="text-3xl font-bold mb-6 text-center text-gray-900">AI Video Analysis</h4>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 pt-20">
+            <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full border-t-4 border-blue-500">
+                <h4 className="text-3xl font-semibold text-gray-900 text-center mb-6">AI Video Analysis</h4>
+                <p className="text-sm text-gray-500 text-center mb-4">Note: Please use YouTube video URLs and enter your message for analysis.</p>
                 <form onSubmit={getResponse} className="space-y-6">
                     <div className="relative">
                         <input
@@ -70,13 +74,8 @@ const Page = () => {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="Enter YouTube video URL"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
                         />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927C11.2 2.68 11.44 2.5 11.735 2.5c.168 0 .334.057.473.161L21.765 10.58c.162.154.263.369.263.586 0 .217-.101.432-.263.586l-9.557 8.927c-.14.104-.306.161-.473.161-.296 0-.536-.18-.685-.427L9.309 15.5H3.5A1.5 1.5 0 012 14V7.5A1.5 1.5 0 013.5 6h5.81L11.05 3.073z" />
-                            </svg>
-                        </span>
                     </div>
                     <div className="relative">
                         <input
@@ -84,31 +83,29 @@ const Page = () => {
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                             placeholder="Enter your message"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all"
                         />
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17l3 3 3-3m0-6v6m0 0H9m3-3a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </span>
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105"
                     >
-                        Send
-                    </button>
-                </form>
-                <div className="mt-6">
-                    <h5 className="text-xl font-semibold mb-4 text-blue-700 text-center">Response</h5>
-                    <div className="bg-white border border-blue-300 shadow-lg p-2 rounded-lg h-72 overflow-y-auto">
                         {loading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <div className="w-6 h-6 border-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
+                            <div className="flex justify-center items-center">
+                                <div className="w-6 h-6 border-4 border-t-white border-gray-300 rounded-full animate-spin"></div>
                             </div>
                         ) : (
-                            <p className="text-base text-gray-800 whitespace-pre-line">{response || 'No response yet'}</p>
+                            'Send'
                         )}
+                    </button>
+                </form>
+
+                <div className="mt-6">
+                    <h5 className="text-xl font-semibold mb-4 text-blue-700 text-center">Response</h5>
+                    <div className="bg-gray-50 border border-blue-300 shadow-lg p-4 rounded-lg h-72 overflow-y-auto">
+                        <p className="text-base text-gray-800 whitespace-pre-line">
+                            {response || 'No response yet.'}
+                        </p>
                     </div>
                 </div>
             </div>

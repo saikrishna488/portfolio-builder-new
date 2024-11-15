@@ -15,35 +15,45 @@ const Ai = require('../demo')
 const keywords = require('../keywords/keywords')
 
 router.post('/add', async (req, res) => {
-    
-    let data = "";
-    let score = 60;
-    if (!req.file) {
-        res.json({
-            score: "No file uploaded"
-        });
-        return;
-    }
-    // Process the uploaded file using pdfParser or any other method
-    let result = await pdfParser(req.file.path)
 
-    data = await result.text;
-    data = data.toUpperCase();
 
-    for (const keyword of keywords) {
-        if (data.includes(keyword)) {
-            if(score < 100){
-                score++;
+    try {
+        let data = "";
+        let score = 60;
+        if (!req.file) {
+            res.json({
+                score: "No file uploaded"
+            });
+            return;
+        }
+        // Process the uploaded file using pdfParser or any other method
+        let result = await pdfParser(req.file.path)
+
+        data = await result.text;
+        data = data.toUpperCase();
+
+        for (const keyword of keywords) {
+            if (data.includes(keyword)) {
+                if (score < 100) {
+                    score++;
+                }
             }
         }
+
+        // Delete the uploaded file after processing 
+        await fs.unlinkSync(req.file.path);
+
+        res.json({
+            score
+        });
+    }
+    catch (err) {
+        console.log(err)
+        res.json({
+            score: 0
+        })
     }
 
-    // Delete the uploaded file after processing 
-    await fs.unlinkSync(req.file.path);
-
-    res.json({
-        score
-    });
 });
 
 router.post('/register', async (req, res) => {
@@ -52,7 +62,7 @@ router.post('/register', async (req, res) => {
         try {
             // Check if username or email already exists
             let user = await User.findOne({ $or: [{ username }, { email }] });
-            
+
             if (!user) {
                 // Create a new user
                 let newUser = new User({
@@ -109,7 +119,7 @@ router.post('/login', async (req, res) => {
                 });
                 res.json({
                     login: true,
-                    id:user.id,
+                    id: user.id,
                     username,
                     name: user.name,
                     email: user.email,
@@ -141,17 +151,18 @@ router.post('/jwt', async (req, res) => {
         try {
             let decode = jwt.verify(token, process.env.JWT_KEY);
             req.user = await User.findById(decode.id).select('-password');
+
             if (req.user) {
                 res.json({
-                    login: true,
-                    name: req.user.name,
-                    username: req.user.username,
-                    email: req.user.email,
-                    id: req.user.id
+                    res: true,
+                    user: req.user
                 });
             }
             else {
-                throw new Error("fail");
+                res.json({
+                    res: false,
+                    msg: "User not found"
+                })
             }
 
         }
@@ -170,34 +181,42 @@ router.post('/jwt', async (req, res) => {
 });
 
 router.post('/userdata', async (req, res) => {
-    const { id, name, description, field, role, skills, certifications, projects, college } = req.body;
+    const { userId, name, description, field, role, skills, certifications, projects, college } = req.body;
 
-    if (id) {
+    if (userId) {
         try {
             // Check if user exists
-            const userExists = await User.findOne({ username: id });
-            if (!userExists) {
-                return res.status(404).json({ message: "User not found" });
+            const user = await User.findOne({ _id: userId });
+
+            if (!user) {
+                return res.status(404).json({ msg: "User not found", res: false });
             }
 
-            // Update or create user details
-            const userDetails = await UserDetails.findOneAndUpdate(
-                { id },
-                { name, description, field, role, skills, certifications, projects, college },
-                { new: true, upsert: true }
-            );
+
+            user.description = description;
+            user.field = field;
+            user.role = role;
+            user.skills = skills;
+            user.certifications = certifications;
+            user.projects = projects;
+            user.college = college;
+
+            await user.save();
+
+
 
             // Return updated or created user details
             res.json({
-                ...userDetails.toObject(),
-                successful: true
+                msg: "User data updated",
+                res: true,
+                user
             });
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: "Server error" });
+            res.status(500).json({ msg: "Server error" });
         }
     } else {
-        res.status(400).json({ login: false, message: "ID is required" });
+        res.status(400).json({ msg: false, msg: "ID is required" });
     }
 });
 
@@ -207,19 +226,26 @@ router.get('/userdata/:id', async (req, res) => {
 
     try {
         if (id) {
-            let user = await UserDetails.findOne({ id });
+            let user = await User.findOne({ username: id });
+
             if (user) {
-                res.json(user);
+                res.json({
+                    res: true,
+                    msg: "User data found",
+                    user
+                });
             }
             else {
                 res.json({
-                    message: "user data not found"
+                    msg: "user data not found",
+                    res: false
                 })
             }
         }
         else {
             res.json({
-                message: "user data not found"
+                msg: "user data not found",
+                res: false
             })
         }
     }
@@ -368,17 +394,17 @@ router.get("/questions", async (req, res) => {
 
     try {
         if (role) {
-            const questions = await QuestionModel.find({role:role})
+            const questions = await QuestionModel.find({ role: role })
 
 
 
             res.json({
-                message :true,
-                questions : questions
+                message: true,
+                questions: questions
             })
         }
 
-        
+
     }
     catch (err) {
         console.log(err)
@@ -391,10 +417,10 @@ router.get("/questions", async (req, res) => {
 })
 
 //upload result
-router.post('/result',async (req,res)=>{
-    try{
+router.post('/result', async (req, res) => {
+    try {
 
-        const {result} = req.body
+        const { result } = req.body
         console.log(result)
 
         if (!Array.isArray(result)) {
@@ -404,9 +430,9 @@ router.post('/result',async (req,res)=>{
         for (let entry of result) {
             const existingEntry = await ResultModel.findOne({ email: entry.email, question: entry.question });
             if (existingEntry) {
-                
+
             }
-            else{
+            else {
                 await ResultModel.create(entry);
             }
         }
@@ -414,23 +440,23 @@ router.post('/result',async (req,res)=>{
             message: true,
         });
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.json({
-            message : false
+            message: false
         })
     }
 })
 
 //delete result
-router.delete('/result',async (req,res)=>{
-    try{
+router.delete('/result', async (req, res) => {
+    try {
 
-        const {answer} = req.body
-        
-        if (answer){
+        const { answer } = req.body
 
-            let deleteResponse = await ResultModel.deleteOne({answer})
+        if (answer) {
+
+            let deleteResponse = await ResultModel.deleteOne({ answer })
 
             if (deleteResponse.deletedCount > 0) {
                 return res.status(200).json({
@@ -444,98 +470,98 @@ router.delete('/result',async (req,res)=>{
                 });
             }
         }
-        else{
+        else {
             return res.status(404).json({
                 message: false,
                 error: "Response not found"
             });
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.json({
-            message : false
+            message: false
         })
     }
 })
 
 // post resumes
-router.post("/resume", async(req,res)=>{
+router.post("/resume", async (req, res) => {
 
     try {
 
-        const {name,url,description} = req.body
+        const { name, url, description } = req.body
 
-        if (name && url && description){
+        if (name && url && description) {
             let newEntry = await ResumeModel.create({
                 name,
                 url,
                 description
             })
             res.json({
-                message : true
+                message: true
             })
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.json({
-            message : false
+            message: false
         })
     }
 })
 
 //add admins
-router.post('/admin', async (req,res)=>{
-    try{
-        const {name, key} = req.body
+router.post('/admin', async (req, res) => {
+    try {
+        const { name, key } = req.body
 
-        if(name && key){
+        if (name && key) {
             let newEntry = await AdminModel.create({
-                name,key
+                name, key
             })
 
             res.json({
-                message :true
+                message: true
             })
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err)
-        
+
         res.json({
-            message :false
+            message: false
         })
     }
 })
 
 //get admins
-router.get('/admin', async (req,res)=>{
-    try{
-        const {key} = req.query
+router.get('/admin', async (req, res) => {
+    try {
+        const { key } = req.query
 
-        if(key){
+        if (key) {
             const newEntry = await AdminModel.findOne({ key });
 
-            if(newEntry){
+            if (newEntry) {
                 res.json({
-                message :true
-            })
+                    message: true
+                })
             }
-            else{
+            else {
                 res.json({
-                    message :false
+                    message: false
                 })
             }
 
-            
+
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err)
-        
+
         res.json({
-            message :false
+            message: false
         })
     }
 })
@@ -597,7 +623,7 @@ router.get('/result', async (req, res) => {
         const check = await AdminModel.findOne({ key });
 
         if (check) {
-            const responses = await ResultModel.find({email});
+            const responses = await ResultModel.find({ email });
 
             if (responses.length > 0) {
                 return res.json({
@@ -666,50 +692,50 @@ router.post('/ai', async (req, res) => {
 
 router.post('/mockattempts', async (req, res) => {
     try {
-      const { email } = req.body;
-  
-      if (!email) {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.json({
+                message: false,
+            });
+        }
+
+        let results = await ResultModel.find({ email }).sort({ createdAt: -1 }).limit(1);
+
+        if (!results || results.length === 0) {
+            return res.json({
+                message: true,
+                days: 1
+            });
+        }
+
+        let date = new Date(results[0].createdAt);
+        let today = new Date();
+
+        const diffTime = Math.abs(today - date);
+        const diffHrs = diffTime / (1000 * 60 * 60);
+
+        let diffDays;
+
+        if (diffHrs < 24) {
+            diffDays = 0
+        }
+        else {
+            diffDays = Math.ceil(diffHrs / (24))
+        }
+
         return res.json({
-          message: false,
+            message: true,
+            days: diffDays,
         });
-      }
-  
-      let results = await ResultModel.find({ email }).sort({ createdAt: -1 }).limit(1);
-  
-      if (!results || results.length === 0) {
-        return res.json({
-          message: true,
-          days: 1
-        });
-      }
-
-      let date = new Date(results[0].createdAt);
-      let today = new Date();
-  
-      const diffTime = Math.abs(today - date);
-      const diffHrs= diffTime / (1000 * 60 * 60);
-
-      let diffDays;
-
-      if(diffHrs<24){
-        diffDays = 0 
-      }
-      else{
-        diffDays = Math.ceil(diffHrs / (24))
-      }
-
-      return res.json({
-        message: true,
-        days: diffDays,
-      });
     } catch (err) {
-      console.log(err);
-      return res.json({
-        message: false,
-        error: 'An error occurred',
-      });
+        console.log(err);
+        return res.json({
+            message: false,
+            error: 'An error occurred',
+        });
     }
-  });
+});
 
 
 

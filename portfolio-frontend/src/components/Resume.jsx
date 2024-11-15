@@ -2,27 +2,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { globalContext } from '../contextApi/GlobalContext';
 import { useRouter } from 'next/navigation';
-import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 
 const Resume = () => {
-    const { data, setCurrentResume } = useContext(globalContext);
-    const [resume, setResume] = useState([]);
+    const { user } = useContext(globalContext);
     const router = useRouter();
-
-    const resumeCard = (name) => {
-        try {
-            if (data.id) {
-                setCurrentResume(name);
-                router.push('/resume');
-            } else {
-                toast.error("Please fill your data in the profile section");
-            }
-        } catch (err) {
-            console.error(err);
-            toast.error("Error occurred. Please try again.");
-        }
-    };
 
     useEffect(() => {
         const fetchAll = async () => {
@@ -40,50 +24,57 @@ const Resume = () => {
             }
         };
 
-        fetchAll();
+        // fetchAll();
     }, []);
 
-    const scrollLeft = () => {
-        document.querySelector('.holder-resume').scrollBy({ left: -360, behavior: 'smooth' });
-    };
+    const resumeCard = (item) => {
+        if(!user?.name){
+            toast.error("Please Login to try");
+            return null;
+        }
 
-    const scrollRight = () => {
-        document.querySelector('.holder-resume').scrollBy({ left: 360, behavior: 'smooth' });
+        if(!user.role){
+            toast.error("Please fill the user data in profile section.");
+            return null;
+        }
+
+        router.push('/resume/' + item + '/' + user.username);
     };
 
     return (
-        <div id='resume' className="flex flex-col items-center min-h-screen text-black p-6 lg:p-12">
-            <h4 className="text-3xl lg:text-4xl font-bold mb-8">Resume Templates</h4>
-            <div className="relative w-full max-w-6xl">
-                {/* Arrow Buttons */}
-                <button
-                    className="flex items-center justify-center absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 transition rounded-full p-2 shadow-lg z-10"
-                    onClick={scrollLeft}
+        <div id='resume' className="flex flex-col items-center min-h-screen text-black pt-20">
+            <h4 className="text-xl font-bold mb-10">Choose Resume Templates</h4>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full">
+                {/* Resume Card */}
+                <div
+                    className="cursor-pointer bg-white border border-gray-300 rounded-lg shadow-md  transform  transition duration-300 flex flex-col items-center "
+                    onClick={() => resumeCard("elevate")}
                 >
-                    <BsFillArrowLeftCircleFill size={40} />
-                </button>
-                <button
-                    className="flex items-center justify-center absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 transition rounded-full p-2 shadow-lg z-10"
-                    onClick={scrollRight}
-                >
-                    <BsFillArrowRightCircleFill size={40} />
-                </button>
-                {/* Resume Cards */}
-                <div className="flex overflow-x-auto scroll-smooth py-4 space-x-4 holder-resume px-10">
-                    {resume.map((item) => (
-                        <div
-                            className="flex-shrink-0 cursor-pointer bg-gray-800 border border-gray-700 rounded-lg shadow-lg hover:bg-gray-700 transition-transform transform hover:scale-105 min-w-[280px] max-w-[350px]"
-                            onClick={() => resumeCard(item.name)}
-                            key={item.name}
-                        >
-                            <img
-                                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${item.url}`}
-                                alt={item.name}
-                                className="w-full h-auto object-cover rounded-lg"
-                            />
-                        </div>
-                    ))}
+                    <div className="w-full h-48 bg-gray-100 rounded-md ">
+                        <img
+                            src={'./resumes/elevate.png'} // Add resume thumbnail URL here if available
+                            alt={'resume'}
+                            className="w-full h-full object-cover rounded-md"
+                        />
+                    </div>
                 </div>
+
+                <div
+                    className="cursor-pointer bg-white border border-gray-300 rounded-lg shadow-md  transform  transition duration-300 flex flex-col items-center "
+                    onClick={() => resumeCard("professional")}
+                >
+                    <div className="w-full h-48 bg-gray-100 rounded-md ">
+                        <img
+                            src={'./resumes/professional.png'} // Add resume thumbnail URL here if available
+                            alt={'resume'}
+                            className="w-full h-full object-cover rounded-md"
+                        />
+                    </div>
+                </div>
+
+
+                {/* Add more resume cards as needed */}
             </div>
         </div>
     );

@@ -98,11 +98,16 @@ const MockInterview = () => {
         return `${min}:${sec < 10 ? '0' : ''}${sec}`;
     }
 
+    if(!questions.length){
+        return <h1 className='mt-20 text-lg'>Loading...</h1>
+    }
+
     return (
         <>
+        <div className='h-full flex items-center'>
             {user.username ? (
-                <div className="max-w-xl mx-auto mt-10 p-5 bg-white shadow-lg rounded-lg">
-                    <div className="mb-4">
+                <div className="max-w-xl mx-auto p-5 bg-white shadow-lg rounded-lg">
+                    <div className="mb-4 ">
                         <h2 className="text-2xl font-bold">Mock Interview</h2>
                         <p className="text-gray-600">Question {questionIndex + 1} of {questions.length}</p>
                         <p className="text-red-500 font-semibold">Time Remaining: {formatTime(remainingTime)}</p>
@@ -124,6 +129,8 @@ const MockInterview = () => {
                 <h1 style={{ textAlign: 'center', color: "white" }}>Login to access</h1>
             )}
 
+        </div>
+            
         </>
 
     );

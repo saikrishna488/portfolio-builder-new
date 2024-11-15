@@ -3,7 +3,7 @@ const { VertexAI } = require('@google-cloud/vertexai');
 const { getSubtitles } = require('youtube-captions-scraper');
 
 // Initialize Vertex AI
-const vertex_ai = new VertexAI({ project: 'flowing-banner-403116', location: 'us-central1' });
+const vertex_ai = new VertexAI({ project: "flowing-banner-403116", location: 'us-central1' });
 const model = 'gemini-1.5-flash-001';
 
 async function summarizeVideo(videoUrl, text) {
@@ -17,9 +17,7 @@ async function summarizeVideo(videoUrl, text) {
         captions += text + " summarize this text";
 
         const summary = await generateContent(captions);
-        const response = await summary
-
-        return response;
+        return summary;
 
     } catch (err) {
         console.error('Error in summarizeVideo:', err);
@@ -52,9 +50,7 @@ async function generateContent(text) {
                 temperature: 1,
                 topP: 0.95,
             },
-            safetySettings: [
-                // Add safety settings as needed
-            ],
+            safetySettings: [],
         });
 
         const request = {

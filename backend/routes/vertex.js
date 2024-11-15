@@ -91,10 +91,12 @@ router.post('/summerize', async(req,res)=>{
     try {
 
         let { text, id } = req.body;
+        console.log(req.body)
 
         if (!text || !id ) {
             return res.json({
-                message: false
+                message: false,
+                msg : "Please enter text"
             })
         }
 
@@ -108,8 +110,10 @@ router.post('/summerize', async(req,res)=>{
         }
 
         text += "("+text+")"+" summerrize this text"
+        console.log(text)
 
         const response = await generateContent(text)
+        
 
         return res.json({
             message : true,
@@ -122,7 +126,7 @@ router.post('/summerize', async(req,res)=>{
     catch (err) {
         console.log(err)
         res.json({
-            message: false
+            message: "error"
         })
     }
 })

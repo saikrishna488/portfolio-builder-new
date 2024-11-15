@@ -15,8 +15,36 @@ const userSchema = mongoose.Schema({
     },
     password : {
         type : String,
-        required : true
-    }
+
+    },
+    description : {
+        type : String,
+
+    },
+    field : {
+        type : String,
+
+    },
+    role : {
+        type : String,
+
+    },
+    skills : {
+        type : [String],
+
+    },
+    certifications : {
+        type : [String],
+
+    },
+    projects : {
+        type : [String],
+
+    },
+    college : {
+        type : String,
+
+    },
 },{
     timestamps : true
 });

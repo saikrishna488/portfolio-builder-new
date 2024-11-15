@@ -117,9 +117,9 @@ const Page = () => {
     // }
 
     return (
-        <div className=" absolute bottom-0 flex flex-col items-center justify-center p-0 m-0 w-full" >
+        <div className=" h-full flex flex-col items-center justify-center pt-20 m-0 w-full" >
             <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col h-full">
-                <h4 className="text-2xl font-bold text-gray-800 text-center mb-0 py-2 border-b border-gray-200">Chat with AI</h4>
+                <h4 className="text-xl text-gray-800 text-center mb-0 py-2 border-b border-gray-200">Chat with AI</h4>
                 <div className="flex-grow flex flex-col overflow-y-auto p-2 m-0 bg-gray-50" style={{ height: 'calc(100vh - 300px)' }}>
                     {messages.map((msg, index) => (
                         <div key={index} className={`mb-3 ${msg.by === user.username ? 'text-right' : 'text-left'}`}>
@@ -131,7 +131,7 @@ const Page = () => {
                     ))}
                     <div ref={chatEndRef} />
                 </div>
-                <form className="flex items-center flex-grow justify-center flex-col lg:flex-row border-t gap-3 border-gray-200 bg-white p-2 m-0" onSubmit={onMessageSend}>
+                <form className="flex items-center flex-grow justify-center flex-col lg:flex-row border-t gap-2 border-gray-200 bg-white px-2 m-0" onSubmit={onMessageSend}>
                     <input
                         type="text"
                         value={userMessage}
