@@ -69,8 +69,8 @@ const Page = () => {
 
     if (user.username) {
         return (
-            <div className='flex flex-col items-center justify-center min-h-screen p-6'>
-                <form className='bg-white p-8 rounded-lg shadow-md w-full max-w-3xl' onSubmit={submit} style={{ width: '60%' }}>
+            <div className='flex flex-col items-center justify-center min-h-screen pt-20'>
+                <form className='bg-white p-8 rounded-lg shadow-md w-full lg:w-[60%] ' onSubmit={submit} >
                     <h2 className="text-2xl font-semibold mb-6 text-center text-blue-600">Update Profile</h2>
 
                     <label className=' text-gray-700 mb-2 flex items-center'>
