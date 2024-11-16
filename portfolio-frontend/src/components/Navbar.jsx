@@ -35,27 +35,27 @@ const Navbar = () => {
     };
 
     const resumeView = () => {
-        document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/resume');
         setHamVisible(false);
     };
 
     const portfolioView = () => {
-        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/portfolio');
         setHamVisible(false);
     };
 
     const resumeScore = () => {
-        document.getElementById('score')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/resumescore');
         setHamVisible(false);
     };
 
     const mockInterview = () => {
-        document.getElementById('mock')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/mock/start');
         setHamVisible(false);
     };
 
     const assessmentView = () => {
-        document.getElementById('assess')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/test/start');
         setHamVisible(false);
     };
 
@@ -75,7 +75,7 @@ const Navbar = () => {
     };
 
     const aiChatBot = () => {
-        document.getElementById('ai')?.scrollIntoView({ behavior: 'smooth' });
+        router.push('/ai');
         setHamVisible(false)
     }
 
@@ -151,7 +151,7 @@ const Navbar = () => {
                             <BookCheck /> Mock
                             </button>
                             <button onClick={assessmentView} className="flex items-center gap-3 bg-gray-100 text-gray-600 py-2 px-4 rounded-lg shadow hover:bg-gray-200 transition">
-                            <BookCheck /> Assessment
+                            <BookCheck /> Assessment 
                             </button>
                             <button onClick={aiChatBot} className="flex items-center gap-3 bg-gray-100 text-gray-600 py-2 px-4 rounded-lg shadow hover:bg-gray-200 transition">
                             <Bot /> AI Chat Bot
