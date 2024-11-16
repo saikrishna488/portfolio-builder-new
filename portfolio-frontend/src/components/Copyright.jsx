@@ -44,7 +44,7 @@ const Footer = () => {
         {/* Copyright Section */}
         <div className='col-span-1 md:col-span-2 lg:col-span-1 text-center md:text-left'>
           <p className='text-gray-400'>
-            © {new Date().getFullYear()} HackerMars. All rights reserved.
+            © {new Date().getFullYear()} ApnAInterview cracker. All rights reserved.
           </p>
         </div>
       </div>
