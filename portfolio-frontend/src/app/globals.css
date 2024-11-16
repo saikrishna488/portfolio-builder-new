@@ -591,12 +591,3 @@ body {
   color : white;
   text-align: center;
 }
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none; /* for Internet Explorer 10+ */
-  scrollbar-width: none; /* for Firefox */
-}

@@ -30,6 +30,7 @@ const MockInterview = () => {
                 });
 
                 const data1 = await res1.json();
+                console.log(data1);
                 if (data1.message !== true || data1.days < 1) {
                     toast.warning("You can only attempt once per day.");
                     return;

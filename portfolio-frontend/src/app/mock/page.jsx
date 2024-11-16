@@ -106,7 +106,7 @@ const MockInterview = () => {
         <>
         <div className='h-full flex items-center'>
             {user.username ? (
-                <div className="max-w-xl mx-auto p-5 bg-white shadow-lg rounded-lg">
+                <div className="lg:w-[60%] mx-auto p-5 bg-white shadow-lg rounded-lg">
                     <div className="mb-4 ">
                         <h2 className="text-2xl font-bold">Mock Interview</h2>
                         <p className="text-gray-600">Question {questionIndex + 1} of {questions.length}</p>

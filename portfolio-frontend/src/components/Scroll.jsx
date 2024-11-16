@@ -1,87 +1,55 @@
-"use client";
-import React, { useEffect, useRef } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-
-const images = [
-  { img: "/green/green1.jpg", title: "Hackathon 2024" },
-  { img: "/green/green2.jpg", title: "Innovators' Challenge" },
-  {img: "/green/green3.jpg", title: "Code Fest" },
-  { img: "/green/green4.jpg", title: "Tech Titans" },
-];
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 const Scroll = () => {
-  const scrollContainerRef = useRef(null);
+  const [focus, setFocus] = useState('/green/green1.jpg'); // Current image
+  const [index, setIndex] = useState(0); // Current index
+
+  const images = [
+    '/green/green1.jpg',
+    '/green/green2.jpg',
+    '/green/green3.jpg',
+    '/green/green4.jpg',
+  ];
 
   useEffect(() => {
-    const scrollContainer = scrollContainerRef.current;
-    if (scrollContainer) {
-      const maxScrollWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      console.log(maxScrollWidth,scrollContainer.clientWidth);
+    // Set up an interval to auto-scroll images
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length); // Increment index cyclically
+    }, 3000);
 
-      const autoScroll = setInterval(() => {
-        const scrollLeft = scrollContainer.scrollLeft;
+    return () => clearInterval(interval); // Clean up the interval on component unmount
+  }, [images.length]);
 
-        if (scrollLeft >= maxScrollWidth) {
-          scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          scrollContainer.scrollBy({ left: scrollContainer.clientWidth+4, behavior: 'smooth' });
-        }
-      }, 2000);
+  useEffect(() => {
+    setFocus(images[index]); // Update the image when index changes
+  }, [index]);
 
-      return () => clearInterval(autoScroll); // Cleanup the interval on component unmount
-    }
-  }, []);
-
-  const scroll = (direction) => {
-    const container = scrollContainerRef.current;
-    if (container) {
-      const cardWidth = container.clientWidth; // Width of a single card
-      const scrollAmount = direction === 'left' ? -cardWidth : cardWidth;
-      container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  const handleArrow = (dir) => {
+    if (dir === 'left') {
+      setIndex((prevIndex) =>
+        prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      );
+    } else if (dir === 'right') {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
     }
   };
 
   return (
-    <div className='relative flex justify-center w-full select-none'>
-      <div className='w-full max-w-screen-xl relative'>
-        <div className='relative flex w-full px-4 items-center'>
-
-          {/* Left Arrow (hidden on small screens) */}
-          <button
-            onClick={() => scroll('left')}
-            className='hidden md:block absolute left-0 rounded-full p-2 hover:bg-blue-600 bg-gray-200'>
-            <IoIosArrowBack />
-          </button>
-
-          {/* Hackathon Cards Container */}
-          <div
-            ref={scrollContainerRef}
-            className='flex gap-2 rounded-2xl overflow-x-auto w-full scrollbar-hide snap-x snap-mandatory'
-            style={{ scrollBehavior: 'smooth' }}
-          >
-            {images.map((hack, index) => (
-              <div
-                key={index}
-                className='bg-white rounded-2xl snap-start lg:min-w-[610px] min-w-[100%]'
-              >
-                <img
-                  src={hack.img}
-                  alt={hack.title}
-
-                  className='lg:h-[300px] h-[200px] w-full' // lg:h-[300px] h-[200px]
-
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Right Arrow (hidden on small screens) */}
-          <button
-            onClick={() => scroll('right')}
-            className='hidden md:block absolute right-0 hover:bg-blue-600 rounded-full p-2 bg-gray-200'>
-            <IoIosArrowForward />
-          </button>
+    <div className="pt-4 w-full h-full">
+      <div className="flex flex-row gap-2 w-full justify-center items-center">
+        <ArrowLeft className="cursor-pointer" onClick={() => handleArrow('left')} />
+        <div className="lg:h-[300px] h-[200px] lg:w-[500px] w-[85%]  transition-transform duration-700 ease-in-out">
+          <img
+            src={focus}
+            alt="green"
+            className="rounded-lg shadow-md h-full w-full object-cover"
+          />
         </div>
+        <ArrowRight
+          className="cursor-pointer"
+          onClick={() => handleArrow('right')}
+        />
       </div>
     </div>
   );

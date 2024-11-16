@@ -2,7 +2,7 @@ import React from 'react';
 
 const Contributor = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-6">
+    <div className="min-h-screen py-16 px-6">
       <div className="max-w-7xl mx-auto py-16">
         <div className="text-center mb-12">
           <h4 className="text-3xl font-extrabold text-gray-900 mb-6">

@@ -36,7 +36,7 @@ const Vertex = () => {
           <h5 className="text-xl font-semibold text-gray-800 mb-2">Vertex AI Summarizer</h5>
           <p className="text-gray-600 mb-4 flex-1">Quickly summarize any content or document. Use the AI Summarizer to save time!</p>
           <button
-            onClick={() => router.push('/summerize')}
+            onClick={() => router.push('/summarize')}
             className="w-full py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300 ease-in-out"
           >
             Try Summarizing
